@@ -8,8 +8,8 @@ type Service = {
   duration: number;
   appointementMethod: AppointementMethod;
   appointementCategorie: AppointementCategorie;
-  baseService: boolean;
-  storeID: string[];
+  baseService?: boolean;
+  storeID?: string[];
 };
 
 export default Service;
