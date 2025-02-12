@@ -4,9 +4,10 @@ import Service, {
   AppointementCategorie,
   AppointementMethod,
 } from "../../types/Service";
+import { RiArrowDropDownLine } from "react-icons/ri";
 
-const methods = ["online", "phone", "none"];
-const categories = [""];
+const methods: AppointementMethod[] = ["online", "phone", "none"];
+const categories: AppointementCategorie[] = [""];
 
 const CreateService = () => {
   const [name, setName] = useState<string>("");
@@ -30,6 +31,10 @@ const CreateService = () => {
   }, []);
 
   useEffect(() => {
+    if (message.length > 0) messageRef.current?.focus;
+  }, []);
+
+  useEffect(() => {
     if (
       name.length > 0 &&
       description.length > 0 &&
@@ -44,6 +49,10 @@ const CreateService = () => {
     }
   }, [name, description]);
 
+  useEffect(() => {
+    setMessage("");
+  }, [name, description, price, duration]);
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -55,8 +64,12 @@ const CreateService = () => {
       appointementMethod: method,
       appointementCategorie: categorie,
     };
-
-    CreateService(newService);
+    try {
+      CreateService(newService).unwrap();
+    } catch (err) {
+      if (err instanceof Error) setMessage(err?.message);
+      console.error(err);
+    }
   };
 
   const content = (
@@ -123,7 +136,26 @@ const CreateService = () => {
           }
         />
         <span>Min</span>
-
+        <div className="select-custom select-method">
+          {method} <RiArrowDropDownLine />
+        </div>
+        <ul>
+          {methods.map((m: AppointementMethod) => (
+            <li key={m} onClick={() => setMethod(m)}>
+              {m}
+            </li>
+          ))}
+        </ul>
+        <div className="select-custom select-category">
+          {categorie} <RiArrowDropDownLine />
+        </div>
+        <ul>
+          {categories.map((c: AppointementCategorie) => (
+            <li key={c} onClick={() => setCategorie(c)}>
+              {c}
+            </li>
+          ))}
+        </ul>
         <button className="btn" disabled={isValid ? false : true}>
           Create Service
         </button>
@@ -131,7 +163,7 @@ const CreateService = () => {
     </main>
   );
 
-  return <div></div>;
+  return content;
 };
 
 export default CreateService;
