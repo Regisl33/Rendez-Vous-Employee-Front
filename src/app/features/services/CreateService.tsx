@@ -22,38 +22,39 @@ const CreateService = () => {
   const nameRef = useRef<HTMLInputElement>(null);
   const messageRef = useRef<HTMLParagraphElement>(null);
 
-  const numberRegExp = /'^[0-9]+$'/;
+  const numberRegExp = /[^0-9]/g;
 
   const [CreateService] = useCreateServiceMutation();
 
   useEffect(() => {
     if (nameRef.current) nameRef.current.focus;
-  }, []);
+  }, [nameRef]);
 
   useEffect(() => {
-    if (message.length > 0) messageRef.current?.focus;
-  }, []);
+    setMessage("");
+  }, [price, duration]);
 
   useEffect(() => {
     if (
       name.length > 0 &&
       description.length > 0 &&
-      numberRegExp.test(price) &&
-      numberRegExp.test(duration)
+      !numberRegExp.test(price) &&
+      !numberRegExp.test(duration)
     ) {
       setIsValid(true);
-    } else if (!numberRegExp.test(price) || !numberRegExp.test(duration)) {
+    } else if (numberRegExp.test(price) || numberRegExp.test(duration)) {
       setMessage("Only Numbers are accepted in the price and duration inputs");
+      console.log("error");
     } else {
       setIsValid(false);
     }
   }, [name, description, price, duration]);
 
   useEffect(() => {
-    setMessage("");
-  }, [name, description, price, duration]);
+    if (message.length > 0) messageRef.current?.focus;
+  }, [message, messageRef]);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const newService: Service = {
@@ -65,7 +66,11 @@ const CreateService = () => {
       appointementCategorie: categorie,
     };
     try {
-      CreateService(newService).unwrap();
+      await CreateService(newService).unwrap();
+      setName("");
+      setDescription("");
+      setPrice("");
+      setDuration("");
     } catch (err) {
       if (err instanceof Error) setMessage(err?.message);
       console.error(err);
@@ -91,7 +96,7 @@ const CreateService = () => {
           ref={nameRef}
           value={name}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setName(e.target.value)
+            setName(e.target.value.trim())
           }
         />
         <label htmlFor="description" className="offscreen">
@@ -103,7 +108,7 @@ const CreateService = () => {
           placeholder="Enter the description of your service"
           value={description}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-            setDescription(e.target.value)
+            setDescription(e.target.value.trim())
           }
         ></textarea>
         <label htmlFor="price" className="offscreen">
@@ -117,7 +122,7 @@ const CreateService = () => {
           placeholder="price"
           value={price}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setPrice(e.target.value)
+            setPrice(e.target.value.trim())
           }
         />
         <span>$</span>
@@ -132,7 +137,7 @@ const CreateService = () => {
           placeholder="duration"
           value={duration}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setDuration(e.target.value)
+            setDuration(e.target.value.trim())
           }
         />
         <span>Min</span>
