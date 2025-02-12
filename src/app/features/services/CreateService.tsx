@@ -47,7 +47,7 @@ const CreateService = () => {
     } else {
       setIsValid(false);
     }
-  }, [name, description]);
+  }, [name, description, price, duration]);
 
   useEffect(() => {
     setMessage("");

@@ -1,5 +1,7 @@
+import CreateService from "./app/features/services/CreateService";
+
 const App = () => {
-  return <div></div>;
+  return <CreateService />;
 };
 
 export default App;
