@@ -1,7 +1,7 @@
 export type AppointementMethod = "online" | "phone" | "none";
 export type AppointementCategorie = string;
 
-type AddService = {
+export type AddService = {
   name: string;
   description: string;
   price: number;
@@ -12,4 +12,17 @@ type AddService = {
   storeID?: string[];
 };
 
-export default AddService;
+export type ServiceType = {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  duration: number;
+  appointementMethod: "online" | "phone" | "none";
+  appointementCategorie: " ";
+  baseService: boolean;
+  storeID?: string[];
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+};

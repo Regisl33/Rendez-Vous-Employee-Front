@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import { useCreateServiceMutation } from "./serviceSlice";
-import AddService, {
+import {
+  AddService,
   AppointementCategorie,
   AppointementMethod,
 } from "../../types/Service";
