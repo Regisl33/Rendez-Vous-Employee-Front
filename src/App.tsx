@@ -6,6 +6,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/services">
+          <Route path="/services/:serviceID" />
           <Route path="/services/add" element={<CreateService />} />
         </Route>
       </Routes>
