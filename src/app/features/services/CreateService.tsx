@@ -8,7 +8,7 @@ import {
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 const methods: AppointementMethod[] = ["online", "phone", "none"];
-const categories: AppointementCategorie[] = [""];
+const categories: AppointementCategorie[] = [" "];
 
 const CreateService = () => {
   const [name, setName] = useState<string>("");
@@ -16,7 +16,7 @@ const CreateService = () => {
   const [price, setPrice] = useState<string>("0");
   const [duration, setDuration] = useState<string>("10");
   const [method, setMethod] = useState<AppointementMethod>("online");
-  const [categorie, setCategorie] = useState<AppointementCategorie>("");
+  const [categorie, setCategorie] = useState<AppointementCategorie>(" ");
   const [isValid, setIsValid] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
 
