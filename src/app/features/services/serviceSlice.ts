@@ -8,14 +8,11 @@ const servicesAdapter = createEntityAdapter({
 
 const initialState = servicesAdapter.getInitialState();
 
-//We will get that value dynamicly later
-const storeID = "1234";
-
 const serviceSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     getServiceByStore: builder.query({
-      query: () => ({
-        url: `/services/:${storeID}`,
+      query: (id: string) => ({
+        url: `/services/:${id}`,
         transformResponse: (res: ServiceType[]) => {
           const servicesData = res;
           return servicesAdapter.setAll(initialState, servicesData);
@@ -31,6 +28,15 @@ const serviceSlice = api.injectEndpoints({
               { type: "Services", id: "ALL" },
             ]
           : [{ type: "Services", id: "ALL" }],
+    }),
+    getServiceByID: builder.query({
+      query: (id: string) => ({
+        url: `/services/:${id}}`,
+        transformResponse: (res: ServiceType) => {
+          let currentService = res;
+          return currentService;
+        },
+      }),
     }),
     createService: builder.mutation({
       query: (service: AddService) => ({
