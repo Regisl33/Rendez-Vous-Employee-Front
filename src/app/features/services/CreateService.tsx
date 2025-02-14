@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import { useCreateServiceMutation } from "./serviceSlice";
-import Service, {
+import AddService, {
   AppointementCategorie,
   AppointementMethod,
 } from "../../types/Service";
@@ -57,7 +57,7 @@ const CreateService = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const newService: Service = {
+    const newService: AddService = {
       name,
       description,
       price: parseInt(price),
