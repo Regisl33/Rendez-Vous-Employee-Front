@@ -26,3 +26,8 @@ export type ServiceType = {
   updatedAt: Date;
   __v: number;
 };
+
+export type UpdateServiceType = {
+  updatedService: ServiceType;
+  id: string;
+};

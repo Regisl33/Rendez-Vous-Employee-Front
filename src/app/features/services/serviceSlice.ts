@@ -1,5 +1,9 @@
 import api from "../../api/api";
-import { AddService, ServiceType } from "../../types/Service";
+import {
+  AddService,
+  ServiceType,
+  UpdateServiceType,
+} from "../../types/Service";
 import { createEntityAdapter } from "@reduxjs/toolkit";
 
 const servicesAdapter = createEntityAdapter({
@@ -46,8 +50,19 @@ const serviceSlice = api.injectEndpoints({
       }),
       invalidatesTags: ["Services"],
     }),
+    updateService: builder.mutation({
+      query: ({ updatedService, id }: UpdateServiceType) => ({
+        url: `/services/:${id}`,
+        method: "PATCH",
+        body: updatedService,
+      }),
+    }),
   }),
 });
 
-export const { useGetServiceByStoreQuery, useCreateServiceMutation } =
-  serviceSlice;
+export const {
+  useGetServiceByStoreQuery,
+  useCreateServiceMutation,
+  useGetServiceByIDQuery,
+  useUpdateServiceMutation,
+} = serviceSlice;
