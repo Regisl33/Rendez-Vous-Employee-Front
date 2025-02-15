@@ -24,6 +24,7 @@ export type ServiceType = {
   storeID?: string[];
   createdAt: Date;
   updatedAt: Date;
+  serviceID: number;
   __v: number;
 };
 

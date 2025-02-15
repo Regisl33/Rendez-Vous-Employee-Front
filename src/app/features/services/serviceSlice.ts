@@ -7,7 +7,7 @@ import {
 import { createEntityAdapter } from "@reduxjs/toolkit";
 
 const servicesAdapter = createEntityAdapter({
-  selectId: (service: ServiceType) => service._id,
+  selectId: (service: ServiceType) => service.serviceID,
 });
 
 const initialState = servicesAdapter.getInitialState();
@@ -15,13 +15,11 @@ const initialState = servicesAdapter.getInitialState();
 const serviceSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     getServiceByStore: builder.query({
-      query: (id: string) => ({
-        url: `/services/:${id}`,
-        transformResponse: (res: ServiceType[]) => {
-          const servicesData = res;
-          return servicesAdapter.setAll(initialState, servicesData);
-        },
-      }),
+      query: (id: string) => `/services/:${id}`,
+      transformResponse: (res: ServiceType[]) => {
+        const servicesData = res;
+        return servicesAdapter.setAll(initialState, servicesData);
+      },
       providesTags: (result) =>
         result
           ? [
@@ -34,13 +32,11 @@ const serviceSlice = api.injectEndpoints({
           : [{ type: "Services", id: "ALL" }],
     }),
     getServiceByID: builder.query({
-      query: (id: string) => ({
-        url: `/services/:${id}}`,
-        transformResponse: (res: ServiceType) => {
-          let currentService = res;
-          return currentService;
-        },
-      }),
+      query: (id: string) => `/services/:${id}}`,
+      transformResponse: (res: ServiceType) => {
+        let currentService = res;
+        return currentService;
+      },
     }),
     createService: builder.mutation({
       query: (service: AddService) => ({
