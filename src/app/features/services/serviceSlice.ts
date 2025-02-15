@@ -56,6 +56,7 @@ const serviceSlice = api.injectEndpoints({
         method: "PATCH",
         body: updatedService,
       }),
+      invalidatesTags: (arg) => [{ type: "Services", id: arg.id }],
     }),
   }),
 });
