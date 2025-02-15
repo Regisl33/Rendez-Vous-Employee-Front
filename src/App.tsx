@@ -1,6 +1,6 @@
-import CreateService from "./app/features/services/CreateService";
+import CreateService from "./app/features/services/components/CreateService";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import StoreServices from "./app/features/services/storeServices";
+import StoreServices from "./app/features/services/components/StoreServices";
 
 const App = () => {
   const app = (

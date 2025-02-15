@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
-import { useCreateServiceMutation } from "./serviceSlice";
+import { useCreateServiceMutation } from "../serviceSlice";
 import {
   AddService,
   AppointementCategorie,
   AppointementMethod,
-} from "../../types/Service";
+} from "../../../types/Service";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
-const methods: AppointementMethod[] = ["online", "phone", "none"];
-const categories: AppointementCategorie[] = [" "];
+export const methods: AppointementMethod[] = ["online", "phone", "none"];
+export const categories: AppointementCategorie[] = [" "];
 
 const CreateService = () => {
   const [name, setName] = useState<string>("");
