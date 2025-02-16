@@ -8,7 +8,7 @@ type propsType = {
 };
 
 const ServicesByCategorie = ({ cat }: propsType) => {
-  const storeID = "1234";
+  const storeID: string = "1234";
   const {
     data: serviceData,
     isError,
@@ -21,7 +21,7 @@ const ServicesByCategorie = ({ cat }: propsType) => {
       console.error(error);
     } else if (serviceData && serviceData.ids.length > 0) {
       let filteredArray: ServiceType[] = [];
-      serviceData.ids.map((id: number) =>
+      serviceData.ids.map((id: string) =>
         serviceData.entities[id].appointementCategorie === cat
           ? filteredArray.push(serviceData.entities[id])
           : null

@@ -42,5 +42,5 @@ export type ServiceType = {
 
 export type UpdateServiceType = {
   updatedService: ServiceType;
-  id: string;
+  id: number;
 };

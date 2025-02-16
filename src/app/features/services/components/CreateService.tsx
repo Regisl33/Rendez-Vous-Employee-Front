@@ -134,7 +134,7 @@ const CreateService = () => {
           type="text"
           id="price"
           className="input"
-          autoCapitalize="off"
+          autoComplete="off"
           placeholder="price"
           value={price}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>

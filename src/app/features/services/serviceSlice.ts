@@ -7,7 +7,7 @@ import {
 import { createEntityAdapter } from "@reduxjs/toolkit";
 
 const servicesAdapter = createEntityAdapter({
-  selectId: (service: ServiceType) => service.serviceID,
+  selectId: (service: ServiceType) => service.serviceID.toString(),
 });
 
 const initialState = servicesAdapter.getInitialState();
@@ -23,7 +23,7 @@ const serviceSlice = api.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result.ids.map((id: number) => ({
+              ...result.ids.map((id: string) => ({
                 type: "Services" as const,
                 id: id,
               })),
@@ -32,7 +32,7 @@ const serviceSlice = api.injectEndpoints({
           : [{ type: "Services", id: "ALL" }],
     }),
     getServiceByID: builder.query({
-      query: (id: string) => `/services/:${id}}`,
+      query: (id: string) => `/services/:${id}`,
       transformResponse: (res: ServiceType) => {
         let currentService = res;
         return currentService;
