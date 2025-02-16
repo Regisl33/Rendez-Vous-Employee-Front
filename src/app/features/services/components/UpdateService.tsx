@@ -30,7 +30,7 @@ const UpdateService = () => {
     <main>{service && <UpdateServiceForm service={service} />}</main>
   );
 
-  return <div></div>;
+  return content;
 };
 
 export default UpdateService;
