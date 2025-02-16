@@ -26,8 +26,8 @@ export const categories: AppointementCategorie[] = [
 const CreateService = () => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [price, setPrice] = useState<string>("0");
-  const [duration, setDuration] = useState<string>("10");
+  const [price, setPrice] = useState<string>("15");
+  const [duration, setDuration] = useState<string>("15");
   const [method, setMethod] = useState<AppointementMethod>("online");
   const [categorie, setCategorie] = useState<AppointementCategorie>(
     "Vaccination, Injection et Prélevements"
@@ -85,8 +85,8 @@ const CreateService = () => {
       await CreateService(newService).unwrap();
       setName("");
       setDescription("");
-      setPrice("");
-      setDuration("");
+      setPrice("15");
+      setDuration("15");
     } catch (err) {
       if (err instanceof Error) setMessage(err?.message);
       console.error(err);
