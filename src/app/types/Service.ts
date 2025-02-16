@@ -1,5 +1,17 @@
 export type AppointementMethod = "online" | "phone" | "none";
-export type AppointementCategorie = string;
+export type AppointementCategorie =
+  | "Santé de la Bouche"
+  | "Santé de la Femme"
+  | "Santé de la Peau"
+  | "Soin des Yeux"
+  | "Santé Digestive"
+  | "Santé Voyage"
+  | "Santé des Oreilles"
+  | "Soin des Pieds"
+  | "Cholestérol"
+  | "Diabète"
+  | "Hypertension"
+  | "Vaccination, Injection et Prélevements";
 
 export type AddService = {
   name: string;
@@ -18,8 +30,8 @@ export type ServiceType = {
   description: string;
   price: number;
   duration: number;
-  appointementMethod: "online" | "phone" | "none";
-  appointementCategorie: " ";
+  appointementMethod: AppointementMethod;
+  appointementCategorie: AppointementCategorie;
   baseService: boolean;
   storeID?: string[];
   createdAt: Date;

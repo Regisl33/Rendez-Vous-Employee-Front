@@ -32,6 +32,7 @@ const ServicesByCategorie = ({ cat }: propsType) => {
 
   const content = (
     <div className="category-container">
+      <h2>{cat}</h2>
       {filteredServ.map((serv: ServiceType) => (
         <ServiceDisplay service={serv} key={serv.serviceID} />
       ))}

@@ -11,9 +11,9 @@ const ServiceDisplay = ({ service }: propsType) => {
     <div className="service-container">
       <div className="active-container"></div>
       <div className="serv-info-container">
-        <h2 onClick={() => navigate(`/services/:${service.serviceID}`)}>
+        <h3 onClick={() => navigate(`/services/:${service.serviceID}`)}>
           {service.name}
-        </h2>
+        </h3>
         <button onClick={() => navigate(`/services/:${service.serviceID}`)}>
           Modifier
         </button>
