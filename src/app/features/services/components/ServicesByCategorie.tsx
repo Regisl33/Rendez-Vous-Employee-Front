@@ -21,7 +21,7 @@ const ServicesByCategorie = ({ cat }: propsType) => {
       console.error(error);
     } else if (serviceData && serviceData.ids.length > 0) {
       let filteredArray: ServiceType[] = [];
-      serviceData.ids.map((id: number) =>
+      serviceData.ids.map((id: string) =>
         serviceData.entities[id].appointementCategorie === cat
           ? filteredArray.push(serviceData.entities[id])
           : null
@@ -34,7 +34,7 @@ const ServicesByCategorie = ({ cat }: propsType) => {
     <div className="category-container">
       <h2>{cat}</h2>
       {filteredServ.map((serv: ServiceType) => (
-        <ServiceDisplay service={serv} key={serv.serviceID} />
+        <ServiceDisplay service={serv} key={serv.id} />
       ))}
     </div>
   );
