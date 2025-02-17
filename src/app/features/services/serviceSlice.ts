@@ -6,10 +6,7 @@ import {
 } from "../../types/Service";
 import { createEntityAdapter, EntityAdapter } from "@reduxjs/toolkit";
 
-const servicesAdapter: EntityAdapter<ServiceType, number> = createEntityAdapter<
-  ServiceType,
-  number
->({
+const servicesAdapter = createEntityAdapter({
   selectId: (service: ServiceType) => service.serviceID,
 });
 
