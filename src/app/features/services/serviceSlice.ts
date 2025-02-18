@@ -33,7 +33,7 @@ const serviceSlice = api.injectEndpoints({
           : [{ type: "Services", id: "ALL" }],
     }),
     getServiceByID: builder.query({
-      query: (id: string) => `/services/:${id}`,
+      query: (id: string) => `/services/modif/${id}`,
       transformResponse: (res: ServiceType) => {
         let currentService = res;
         return currentService;

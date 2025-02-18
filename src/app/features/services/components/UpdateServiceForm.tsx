@@ -73,13 +73,17 @@ const UpdateServiceForm = ({ service }: propsType) => {
   }, [price, duration]);
 
   useEffect(() => {
-    setUpdatedPrice(price.toString());
-    setUpdatedDuration(duration.toString());
+    let tempPrice = `${price}`;
+    let tempDuration = `${duration}`;
+    setUpdatedPrice(tempPrice);
+    setUpdatedDuration(tempDuration);
   }, []);
 
   useEffect(() => {
     if (
+      name &&
       name.length > 0 &&
+      description &&
       description.length > 0 &&
       !numberRegExp.test(updatedPrice) &&
       !numberRegExp.test(updatedDuration)
