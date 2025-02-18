@@ -16,8 +16,10 @@ const UpdateServiceForm = ({ service }: propsType) => {
   const [name, setName] = useState<string>(service.name);
   const [modifyName, setModifyName] = useState(false);
   const [description, setDescription] = useState<string>(service.description);
-  const [price, setPrice] = useState<string>(service.price.toString());
-  const [duration, setDuration] = useState<string>(service.price.toString());
+  const [price, setPrice] = useState<number>(service.price);
+  const [updatedPrice, setUpdatedPrice] = useState<string>("");
+  const [duration, setDuration] = useState<number>(service.price);
+  const [updatedDuration, setUpdatedDuration] = useState<string>("");
   const [method, setMethod] = useState<AppointementMethod>(
     service.appointementMethod
   );
@@ -41,13 +43,13 @@ const UpdateServiceForm = ({ service }: propsType) => {
       _id: service._id,
       name,
       description,
-      price: parseInt(price),
-      duration: parseInt(duration),
+      price,
+      duration,
       appointementMethod: method,
       appointementCategorie: categorie,
       baseService: service.baseService,
       storeID,
-      serviceID: service.serviceID,
+      id: service.id,
       createdAt: service.createdAt,
       updatedAt: service.updatedAt,
       __v: service.__v,
@@ -55,7 +57,7 @@ const UpdateServiceForm = ({ service }: propsType) => {
 
     const updateRequest = {
       updatedService,
-      id: service.serviceID,
+      id: service.id,
     };
 
     try {
@@ -71,14 +73,24 @@ const UpdateServiceForm = ({ service }: propsType) => {
   }, [price, duration]);
 
   useEffect(() => {
+    setUpdatedPrice(price.toString());
+    setUpdatedDuration(duration.toString());
+  }, []);
+
+  useEffect(() => {
     if (
       name.length > 0 &&
       description.length > 0 &&
-      !numberRegExp.test(price) &&
-      !numberRegExp.test(duration)
+      !numberRegExp.test(updatedPrice) &&
+      !numberRegExp.test(updatedDuration)
     ) {
+      setPrice(parseInt(updatedPrice));
+      setDuration(parseInt(updatedDuration));
       setIsValid(true);
-    } else if (numberRegExp.test(price) || numberRegExp.test(duration)) {
+    } else if (
+      numberRegExp.test(updatedPrice) ||
+      numberRegExp.test(updatedDuration)
+    ) {
       setMessage("Only Numbers are accepted in the price and duration inputs");
       console.log("error");
     } else {
@@ -136,9 +148,9 @@ const UpdateServiceForm = ({ service }: propsType) => {
         className="input"
         autoComplete="off"
         placeholder="price"
-        value={price}
+        value={updatedPrice}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setPrice(e.target.value.trim())
+          setUpdatedPrice(e.target.value.trim())
         }
       />
       <span>$</span>
@@ -151,9 +163,9 @@ const UpdateServiceForm = ({ service }: propsType) => {
         className="input"
         autoCapitalize="off"
         placeholder="duration"
-        value={duration}
+        value={updatedDuration}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setDuration(e.target.value.trim())
+          setUpdatedDuration(e.target.value.trim())
         }
       />
       <span>Min</span>
@@ -184,6 +196,9 @@ const UpdateServiceForm = ({ service }: propsType) => {
       >
         Save
       </button>
+      <p ref={messageRef} className={message.length > 0 ? "" : "offscreen"}>
+        {message}
+      </p>
     </>
   );
 

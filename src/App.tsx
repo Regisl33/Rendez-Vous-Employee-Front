@@ -7,9 +7,8 @@ const App = () => {
   const app = (
     <BrowserRouter>
       <Routes>
-        <Route path="/services" element={<StoreServices />}>
-          <Route path="/services/:serviceID" element={<UpdateService />} />
-        </Route>
+        <Route path="/services" element={<StoreServices />} />
+        <Route path="/services/:servID" element={<UpdateService />} />
         <Route path="/services/add" element={<CreateService />} />
       </Routes>
     </BrowserRouter>
