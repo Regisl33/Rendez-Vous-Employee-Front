@@ -4,10 +4,10 @@ import {
   ServiceType,
   UpdateServiceType,
 } from "../../types/Service";
-import { createEntityAdapter, EntityAdapter } from "@reduxjs/toolkit";
+import { createEntityAdapter } from "@reduxjs/toolkit";
 
 const servicesAdapter = createEntityAdapter({
-  selectId: (service: ServiceType) => service._id,
+  selectId: (service: ServiceType) => service.id,
   sortComparer: (a, b) => a.id - b.id,
 });
 
@@ -24,7 +24,7 @@ const serviceSlice = api.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result.ids.map((id: string) => ({
+              ...result.ids.map((id: number) => ({
                 type: "Services" as const,
                 id: id,
               })),
