@@ -4,7 +4,7 @@ import {
   ServiceType,
   UpdateServiceType,
 } from "../../types/Service";
-import { createEntityAdapter, EntityAdapter } from "@reduxjs/toolkit";
+import { createEntityAdapter } from "@reduxjs/toolkit";
 
 const servicesAdapter = createEntityAdapter({
   selectId: (service: ServiceType) => service._id,
