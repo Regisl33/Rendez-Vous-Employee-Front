@@ -1,4 +1,4 @@
-import api from "../../api/api";
+import api from "../../app/api/api";
 import {
   AddService,
   ServiceType,
@@ -53,7 +53,9 @@ const serviceSlice = api.injectEndpoints({
         method: "PATCH",
         body: updatedService,
       }),
-      invalidatesTags: (arg) => [{ type: "Services", id: arg.id }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Services", id: arg.id },
+      ],
     }),
   }),
 });
