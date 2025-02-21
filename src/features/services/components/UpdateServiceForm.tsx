@@ -100,7 +100,7 @@ const UpdateServiceForm = ({ service }: propsType) => {
     } else {
       setIsValid(false);
     }
-  }, [name, description, price, duration]);
+  }, [name, description, updatedPrice, updatedDuration]);
 
   useEffect(() => {
     if (message.length > 0) messageRef.current?.focus;
