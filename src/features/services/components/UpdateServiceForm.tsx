@@ -18,7 +18,7 @@ const UpdateServiceForm = ({ service }: propsType) => {
   const [description, setDescription] = useState<string>(service.description);
   const [price, setPrice] = useState<number>(service.price);
   const [updatedPrice, setUpdatedPrice] = useState<string>("");
-  const [duration, setDuration] = useState<number>(service.price);
+  const [duration, setDuration] = useState<number>(service.duration);
   const [updatedDuration, setUpdatedDuration] = useState<string>("");
   const [method, setMethod] = useState<AppointementMethod>(
     service.appointementMethod
