@@ -7,6 +7,8 @@ import {
 import { useUpdateServiceMutation } from "../serviceSlice";
 import { categories, methods } from "./CreateService";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { FaEdit } from "react-icons/fa";
+import { CiCircleCheck } from "react-icons/ci";
 
 type propsType = {
   service: ServiceType;
@@ -124,11 +126,16 @@ const UpdateServiceForm = ({ service }: propsType) => {
               setName(e.target.value.trim())
             }
           />
-          <span></span>
+          <span>
+            <CiCircleCheck onClick={() => setModifyName(false)} />
+          </span>
         </>
       ) : (
         <h1>
-          {service.name} <span></span>
+          {service.name}{" "}
+          <span>
+            <FaEdit onClick={() => setModifyName(true)} />
+          </span>
         </h1>
       )}
       <label htmlFor="description" className="offscreen">
@@ -200,6 +207,14 @@ const UpdateServiceForm = ({ service }: propsType) => {
       >
         Save
       </button>
+      <div className="checkbox-wrapper-55">
+        <label className="rocker rocker-small">
+          <input type="checkbox" />
+          <span className="switch-left">Add</span>
+          <span className="switch-right">Remove</span>
+        </label>
+      </div>
+
       <p ref={messageRef} className={message.length > 0 ? "" : "offscreen"}>
         {message}
       </p>
