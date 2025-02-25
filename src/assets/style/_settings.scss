@@ -1,5 +1,7 @@
 //Colors
-$color1: blue;
+$color1: #6600ff;
+$color2: #6699ff;
+$color3: red;
 $black1: rgb(9, 9, 9);
 $white1: whitesmoke;
 
@@ -12,8 +14,9 @@ $white1: whitesmoke;
   font-family: "font2";
   src: url("../Fonts/Poppins/Poppins-Bold.ttf");
 }
+
 $font1: "font1", sans-serif;
-$font1: "font2", sans-serif;
+$font2: "font2", sans-serif;
 
 //mixins
 @mixin justify($position) {
@@ -35,4 +38,5 @@ $font1: "font2", sans-serif;
 body {
   min-height: 100vh;
   font-family: $font1;
+  text-align: center;
 }

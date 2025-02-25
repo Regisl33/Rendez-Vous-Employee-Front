@@ -6,6 +6,7 @@ import {
   AppointementMethod,
 } from "../../../types/Service";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import Header from "../../../components/header";
 
 export const methods: AppointementMethod[] = ["online", "phone", "none"];
 export const categories: AppointementCategorie[] = [
@@ -95,8 +96,11 @@ const CreateService = () => {
 
   const content = (
     <main className="service-form-container">
-      <h1>Create Your Personalized Services</h1>
-      <p ref={messageRef} className={message.length > 0 ? "" : "offscreen"}>
+      <Header title="Create Your Personalized Services" />
+      <p
+        ref={messageRef}
+        className={message.length > 0 ? "errorMsg" : "offscreen"}
+      >
         {message}
       </p>
       <form className="service-form" onSubmit={handleSubmit}>
@@ -120,6 +124,7 @@ const CreateService = () => {
         </label>
         <textarea
           id="description"
+          className="textarea"
           autoComplete="off"
           placeholder="Enter the description of your service"
           value={description}
@@ -127,40 +132,41 @@ const CreateService = () => {
             setDescription(e.target.value.trim())
           }
         ></textarea>
-        <label htmlFor="price" className="offscreen">
-          Price
-        </label>
-        <input
-          type="text"
-          id="price"
-          className="input"
-          autoComplete="off"
-          placeholder="price"
-          value={price}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setPrice(e.target.value.trim())
-          }
-        />
-        <span>$</span>
-        <label htmlFor="duration" className="offscreen">
-          Duration
-        </label>
-        <input
-          type="text"
-          id="duration"
-          className="input"
-          autoCapitalize="off"
-          placeholder="duration"
-          value={duration}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setDuration(e.target.value.trim())
-          }
-        />
-        <span>Min</span>
+        <div className="price-container">
+          <label htmlFor="price">Price</label>
+          <input
+            type="text"
+            id="price"
+            className="input"
+            autoComplete="off"
+            placeholder="Price"
+            value={price}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setPrice(e.target.value.trim())
+            }
+          />
+          <span>$</span>
+        </div>
+        <div className="duration-container">
+          <label htmlFor="duration">Duration</label>
+          <input
+            type="text"
+            id="duration"
+            className="input"
+            autoCapitalize="off"
+            placeholder="Duration"
+            value={duration}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setDuration(e.target.value.trim())
+            }
+          />
+          <span>Min</span>
+        </div>
+
         <div className="select-custom select-method">
           {method} <RiArrowDropDownLine />
         </div>
-        <ul>
+        <ul className="option-list">
           {methods.map((m: AppointementMethod) => (
             <li key={m} onClick={() => setMethod(m)}>
               {m}
@@ -170,7 +176,7 @@ const CreateService = () => {
         <div className="select-custom select-category">
           {categorie} <RiArrowDropDownLine />
         </div>
-        <ul>
+        <ul className="option-list">
           {categories.map((c: AppointementCategorie) => (
             <li key={c} onClick={() => setCategorie(c)}>
               {c}

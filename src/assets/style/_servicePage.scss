@@ -1,0 +1,10 @@
+@use "./settings" as *;
+
+.service-form-container {
+  @include justify(center);
+
+  .service-form {
+    display: grid;
+    width: 60%;
+  }
+}

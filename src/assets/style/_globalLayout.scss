@@ -1,0 +1,17 @@
+@use "./settings" as *;
+
+.header {
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 75%,
+    45% 75%,
+    30% 100%,
+    0% 100%,
+    0% 75%
+  );
+  background: $color1;
+  height: 20vh;
+  color: $white1;
+  @include justify(center);
+}

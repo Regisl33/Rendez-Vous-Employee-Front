@@ -1,14 +1,40 @@
-// .input {
-//   font-family: inherit;
-//   font-size: inherit;
-//   padding: 10px;
-//   border: 1px solid $color1;
-//   border-radius: 25px;
-// }
-// .textarea {
-//   font-family: inherit;
-//   font-size: inherit;
-//   padding: 10px;
-//   border: 1px solid $color1;
-//   border-radius: 25px;
-// }
+@use "./settings" as *;
+
+.input {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 10px;
+  border: 1px solid $color1;
+  border-radius: 10px;
+}
+.textarea {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 10px;
+  border: 1px solid $color1;
+  border-radius: 10px;
+  resize: none;
+}
+.offscreen {
+  position: absolute;
+  left: -9999999px;
+}
+.select-custom {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  align-items: center;
+}
+.option-list {
+  display: none;
+}
+.btn {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 10px;
+  border: 1px solid $color1;
+  border-radius: 10px;
+}
+.errorMsg {
+  color: $color3;
+  letter-spacing: 1px;
+}
