@@ -6,7 +6,7 @@ import {
   AppointementMethod,
 } from "../../../types/Service";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import Header from "../../../components/header";
+import Header from "../../../components/Header";
 
 export const methods: AppointementMethod[] = ["online", "phone", "none"];
 export const categories: AppointementCategorie[] = [
@@ -95,8 +95,7 @@ const CreateService = () => {
   };
 
   const content = (
-    <main className="service-form-container">
-      <Header title="Create Your Personalized Services" />
+    <div className="service-form-container">
       <p
         ref={messageRef}
         className={message.length > 0 ? "errorMsg" : "offscreen"}
@@ -133,7 +132,7 @@ const CreateService = () => {
           }
         ></textarea>
         <div className="price-container">
-          <label htmlFor="price">Price</label>
+          <label htmlFor="price">Price:</label>
           <input
             type="text"
             id="price"
@@ -148,7 +147,7 @@ const CreateService = () => {
           <span>$</span>
         </div>
         <div className="duration-container">
-          <label htmlFor="duration">Duration</label>
+          <label htmlFor="duration">Duration:</label>
           <input
             type="text"
             id="duration"
@@ -187,7 +186,7 @@ const CreateService = () => {
           Create Service
         </button>
       </form>
-    </main>
+    </div>
   );
 
   return content;

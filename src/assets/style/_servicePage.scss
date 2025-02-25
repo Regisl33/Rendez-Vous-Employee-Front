@@ -2,9 +2,23 @@
 
 .service-form-container {
   @include justify(center);
+  margin-top: 25px;
 
   .service-form {
     display: grid;
-    width: 60%;
+    width: 90%;
+    max-width: 600px;
+    gap: 15px;
+  }
+}
+.price-container,
+.duration-container {
+  width: 100%;
+  @include justify(flex-start);
+  gap: 15px;
+
+  .input {
+    text-align: center;
+    width: 10%;
   }
 }

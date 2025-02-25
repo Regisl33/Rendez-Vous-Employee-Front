@@ -6,6 +6,12 @@
   padding: 10px;
   border: 1px solid $color1;
   border-radius: 10px;
+  letter-spacing: 1px;
+
+  &:focus {
+    border: 1px solid $color2;
+    transform: scale(102%);
+  }
 }
 .textarea {
   font-family: inherit;
@@ -14,6 +20,13 @@
   border: 1px solid $color1;
   border-radius: 10px;
   resize: none;
+  letter-spacing: 1px;
+  min-height: 15vh;
+
+  &:focus {
+    border: 1px solid $color2;
+    transform: scale(102%);
+  }
 }
 .offscreen {
   position: absolute;
@@ -33,6 +46,40 @@
   padding: 10px;
   border: 1px solid $color1;
   border-radius: 10px;
+  cursor: pointer;
+  background: none;
+  color: $black1;
+  position: relative;
+  transition: 0.4 ease-in-out;
+  width: 90%;
+  max-width: 240px;
+  place-self: center;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    border-radius: 8px;
+    background: $color2;
+    height: 0;
+    width: 0;
+    transition: 0.4s ease-in-out;
+    z-index: -1;
+  }
+  &:hover:enabled {
+    transform: scale(102%);
+    border: 1px solid $color2;
+  }
+  &:hover:enabled::before {
+    height: 100%;
+    width: 100%;
+  }
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
 }
 .errorMsg {
   color: $color3;

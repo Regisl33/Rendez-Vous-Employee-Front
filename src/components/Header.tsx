@@ -1,8 +1,5 @@
-type headerProps = {
-  title: string;
-};
-
-const Header = ({ title }: headerProps) => {
+const Header = () => {
+  const title = "Create Your Personalized Services";
   const content = (
     <header className="header">
       <h1>{title}</h1>

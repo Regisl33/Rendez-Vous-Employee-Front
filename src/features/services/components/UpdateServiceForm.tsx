@@ -144,6 +144,7 @@ const UpdateServiceForm = ({ service }: propsType) => {
       <textarea
         id="description"
         autoComplete="off"
+        className="textarea"
         placeholder="Enter the description of your service"
         value={description}
         onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
