@@ -208,13 +208,7 @@ const UpdateServiceForm = ({ service }: propsType) => {
       >
         Save
       </button>
-      <div className="checkbox-wrapper-55">
-        <label className="rocker rocker-small">
-          <input type="checkbox" />
-          <span className="switch-left">Add</span>
-          <span className="switch-right">Remove</span>
-        </label>
-      </div>
+      <div className=""></div>
 
       <p ref={messageRef} className={message.length > 0 ? "" : "offscreen"}>
         {message}

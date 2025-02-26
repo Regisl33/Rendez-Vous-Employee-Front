@@ -20,7 +20,7 @@ export const categories: AppointementCategorie[] = [
   "Cholestérol",
   "Diabète",
   "Hypertension",
-  "Vaccination, Injection et Prélevements",
+  "Injection et Prélevements",
 ];
 
 const CreateService = () => {
@@ -30,7 +30,7 @@ const CreateService = () => {
   const [duration, setDuration] = useState<string>("15");
   const [method, setMethod] = useState<AppointementMethod>("online");
   const [categorie, setCategorie] = useState<AppointementCategorie>(
-    "Vaccination, Injection et Prélevements"
+    "Injection et Prélevements"
   );
   const [isValid, setIsValid] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
@@ -144,69 +144,78 @@ const CreateService = () => {
           }
         ></textarea>
         <div className="param-container">
-          <div className="price-container">
-            <label htmlFor="price">Prix:</label>
-            <input
-              type="text"
-              id="price"
-              className="input"
-              autoComplete="off"
-              placeholder="Prix"
-              value={price}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setPrice(e.target.value.trim())
-              }
-            />
-            <span>$</span>
+          <div className="grid-container">
+            <div className="price-container">
+              <label htmlFor="price">Prix:</label>
+              <input
+                type="text"
+                id="price"
+                className="input"
+                autoComplete="off"
+                placeholder="Prix"
+                value={price}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setPrice(e.target.value.trim())
+                }
+              />
+              <span>$</span>
+            </div>
+            <div className="duration-container">
+              <label htmlFor="duration">Durée du Service:</label>
+              <input
+                type="text"
+                id="duration"
+                className="input"
+                autoCapitalize="off"
+                placeholder="Durée"
+                value={duration}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setDuration(e.target.value.trim())
+                }
+              />
+              <span>Min</span>
+            </div>
+            <div className="select-method-container">
+              <label htmlFor="custom-select-method">
+                Méthode pour prendre Rendez-Vous:
+              </label>
+              <div
+                className="select-custom select-method"
+                id="custom-select-method"
+              >
+                {displayMethods(method)} <RiArrowDropDownLine />
+                <ul>
+                  {methods.map((m: AppointementMethod) => (
+                    <li key={m} onClick={() => setMethod(m)}>
+                      {displayMethods(m)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
-          <div className="duration-container">
-            <label htmlFor="duration">Durée du Service:</label>
-            <input
-              type="text"
-              id="duration"
-              className="input"
-              autoCapitalize="off"
-              placeholder="Durée"
-              value={duration}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setDuration(e.target.value.trim())
-              }
-            />
-            <span>Min</span>
-          </div>
-          <div className="select-method-container">
-            <label htmlFor="custom-select-method">
-              Méthode pour prendre Rendez-Vous:
+          <div className="select-category-container">
+            <label htmlFor="custom-select-category">
+              Définir la Catégorie du Service:
             </label>
             <div
-              className="select-custom select-method"
-              id="custom-select-method"
+              className="select-custom select-category"
+              id="custom-select-category"
             >
-              {displayMethods(method)} <RiArrowDropDownLine />
-              <ul className="option-list">
-                {methods.map((m: AppointementMethod) => (
-                  <li key={m} onClick={() => setMethod(m)}>
-                    {displayMethods(m)}
+              {categorie} <RiArrowDropDownLine />
+              <ul>
+                {categories.map((c: AppointementCategorie) => (
+                  <li key={c} onClick={() => setCategorie(c)}>
+                    {c}
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-
-          <div className="select-custom select-category">
-            {categorie} <RiArrowDropDownLine />
-            <ul className="option-list">
-              {categories.map((c: AppointementCategorie) => (
-                <li key={c} onClick={() => setCategorie(c)}>
-                  {c}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <button className="btn" disabled={isValid ? false : true}>
-            Create Service
-          </button>
         </div>
+        <button className="btn" disabled={isValid ? false : true}>
+          Create Service
+        </button>
       </form>
     </div>
   );

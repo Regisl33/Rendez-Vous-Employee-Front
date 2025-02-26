@@ -11,7 +11,7 @@ export type AppointementCategorie =
   | "Cholestérol"
   | "Diabète"
   | "Hypertension"
-  | "Vaccination, Injection et Prélevements";
+  | "Injection et Prélevements";
 
 export type AddService = {
   name: string;

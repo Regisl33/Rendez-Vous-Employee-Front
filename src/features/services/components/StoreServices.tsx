@@ -3,11 +3,11 @@ import ServicesByCategorie from "./ServicesByCategorie";
 
 const StoreServices = () => {
   const content = (
-    <main>
+    <div className="display-service-container">
       {categories.map((cat) => (
         <ServicesByCategorie cat={cat} key={cat} />
       ))}
-    </main>
+    </div>
   );
 
   return content;

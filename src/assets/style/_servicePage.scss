@@ -13,6 +13,14 @@
 }
 
 .param-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+
+  .grid-container {
+    display: grid;
+    gap: 15px;
+  }
+
   .price-container,
   .duration-container {
     width: 100%;
@@ -21,7 +29,7 @@
 
     .input {
       text-align: center;
-      width: 10%;
+      width: 20%;
     }
   }
   .select-method-container {
@@ -31,7 +39,40 @@
 
     .select-method {
       width: 90%;
-      max-width: 190px;
+      max-width: 220px;
+      place-self: center;
     }
+  }
+  .select-category-container {
+    @include justify(flex-start);
+    flex-direction: column;
+    gap: 10px;
+
+    .select-category {
+      width: 90%;
+      max-width: 360px;
+    }
+  }
+}
+
+.display-service-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 20px auto;
+
+  h2 {
+    text-align: left;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-family: $font2;
+    margin-left: 30px;
+  }
+
+  .category-container {
+    border: 1px solid $grey1;
+    border-radius: 20px;
+    width: 100%;
+    padding: 10px;
+    margin: 5px;
   }
 }
