@@ -6,7 +6,6 @@ import {
   AppointementMethod,
 } from "../../../types/Service";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import Header from "../../../components/Header";
 
 export const methods: AppointementMethod[] = ["online", "phone", "none"];
 export const categories: AppointementCategorie[] = [
@@ -71,6 +70,19 @@ const CreateService = () => {
     if (message.length > 0) messageRef.current?.focus;
   }, [message, messageRef]);
 
+  const displayMethods = (m: AppointementMethod): string => {
+    switch (m) {
+      case "online":
+        return "En Ligne";
+      case "phone":
+        return "Par Téléphone";
+      case "none":
+        return "Sans-Rendez-Vous";
+      default:
+        return "Par Téléphone";
+    }
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -104,14 +116,14 @@ const CreateService = () => {
       </p>
       <form className="service-form" onSubmit={handleSubmit}>
         <label className="offscreen" htmlFor="name">
-          Name
+          Nom
         </label>
         <input
           type="text"
           className="input"
           id="name"
           autoComplete="off"
-          placeholder="Service Name"
+          placeholder="Nom du Service"
           ref={nameRef}
           value={name}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -125,66 +137,76 @@ const CreateService = () => {
           id="description"
           className="textarea"
           autoComplete="off"
-          placeholder="Enter the description of your service"
+          placeholder="Description du Service"
           value={description}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             setDescription(e.target.value.trim())
           }
         ></textarea>
-        <div className="price-container">
-          <label htmlFor="price">Price:</label>
-          <input
-            type="text"
-            id="price"
-            className="input"
-            autoComplete="off"
-            placeholder="Price"
-            value={price}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setPrice(e.target.value.trim())
-            }
-          />
-          <span>$</span>
-        </div>
-        <div className="duration-container">
-          <label htmlFor="duration">Duration:</label>
-          <input
-            type="text"
-            id="duration"
-            className="input"
-            autoCapitalize="off"
-            placeholder="Duration"
-            value={duration}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setDuration(e.target.value.trim())
-            }
-          />
-          <span>Min</span>
-        </div>
+        <div className="param-container">
+          <div className="price-container">
+            <label htmlFor="price">Prix:</label>
+            <input
+              type="text"
+              id="price"
+              className="input"
+              autoComplete="off"
+              placeholder="Prix"
+              value={price}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setPrice(e.target.value.trim())
+              }
+            />
+            <span>$</span>
+          </div>
+          <div className="duration-container">
+            <label htmlFor="duration">Durée du Service:</label>
+            <input
+              type="text"
+              id="duration"
+              className="input"
+              autoCapitalize="off"
+              placeholder="Durée"
+              value={duration}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setDuration(e.target.value.trim())
+              }
+            />
+            <span>Min</span>
+          </div>
+          <div className="select-method-container">
+            <label htmlFor="custom-select-method">
+              Méthode pour prendre Rendez-Vous:
+            </label>
+            <div
+              className="select-custom select-method"
+              id="custom-select-method"
+            >
+              {displayMethods(method)} <RiArrowDropDownLine />
+              <ul className="option-list">
+                {methods.map((m: AppointementMethod) => (
+                  <li key={m} onClick={() => setMethod(m)}>
+                    {displayMethods(m)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
 
-        <div className="select-custom select-method">
-          {method} <RiArrowDropDownLine />
+          <div className="select-custom select-category">
+            {categorie} <RiArrowDropDownLine />
+            <ul className="option-list">
+              {categories.map((c: AppointementCategorie) => (
+                <li key={c} onClick={() => setCategorie(c)}>
+                  {c}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <button className="btn" disabled={isValid ? false : true}>
+            Create Service
+          </button>
         </div>
-        <ul className="option-list">
-          {methods.map((m: AppointementMethod) => (
-            <li key={m} onClick={() => setMethod(m)}>
-              {m}
-            </li>
-          ))}
-        </ul>
-        <div className="select-custom select-category">
-          {categorie} <RiArrowDropDownLine />
-        </div>
-        <ul className="option-list">
-          {categories.map((c: AppointementCategorie) => (
-            <li key={c} onClick={() => setCategorie(c)}>
-              {c}
-            </li>
-          ))}
-        </ul>
-        <button className="btn" disabled={isValid ? false : true}>
-          Create Service
-        </button>
       </form>
     </div>
   );

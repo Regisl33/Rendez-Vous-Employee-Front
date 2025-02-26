@@ -11,14 +11,27 @@
     gap: 15px;
   }
 }
-.price-container,
-.duration-container {
-  width: 100%;
-  @include justify(flex-start);
-  gap: 15px;
 
-  .input {
-    text-align: center;
-    width: 10%;
+.param-container {
+  .price-container,
+  .duration-container {
+    width: 100%;
+    @include justify(flex-start);
+    gap: 15px;
+
+    .input {
+      text-align: center;
+      width: 10%;
+    }
+  }
+  .select-method-container {
+    text-align: left;
+    display: grid;
+    gap: 15px;
+
+    .select-method {
+      width: 90%;
+      max-width: 190px;
+    }
   }
 }

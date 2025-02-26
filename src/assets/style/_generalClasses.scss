@@ -7,6 +7,7 @@
   border: 1px solid $color1;
   border-radius: 10px;
   letter-spacing: 1px;
+  transition: 0.2s ease-in-out;
 
   &:focus {
     border: 1px solid $color2;
@@ -22,6 +23,7 @@
   resize: none;
   letter-spacing: 1px;
   min-height: 15vh;
+  transition: 0.2s ease-in-out;
 
   &:focus {
     border: 1px solid $color2;
@@ -33,12 +35,43 @@
   left: -9999999px;
 }
 .select-custom {
-  display: grid;
-  grid-template-columns: 80% 20%;
-  align-items: center;
-}
-.option-list {
-  display: none;
+  @include justify(center);
+  gap: 15px;
+  border: 1px solid $color1;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  position: relative;
+  text-transform: capitalize;
+
+  svg {
+    font-size: 1.5rem;
+  }
+
+  &:hover {
+    border: 1px solid $color2;
+    transform: scale(102%);
+  }
+  &:hover ul {
+    @include justify(center);
+  }
+
+  ul {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    width: 100%;
+    background: $white1;
+    flex-direction: column;
+    gap: 5px;
+
+    &:hover {
+      @include justify(center);
+    }
+  }
 }
 .btn {
   font-family: inherit;
@@ -50,7 +83,7 @@
   background: none;
   color: $black1;
   position: relative;
-  transition: 0.4 ease-in-out;
+  transition: 0.3s ease-in-out;
   width: 90%;
   max-width: 240px;
   place-self: center;
