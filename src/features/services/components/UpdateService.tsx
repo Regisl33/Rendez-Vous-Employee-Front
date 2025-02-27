@@ -19,9 +19,9 @@ const UpdateService = () => {
   }, [servID, isError, error]);
 
   const content = (
-    <main>
+    <div>
       {currentService && <UpdateServiceForm service={currentService} />}
-    </main>
+    </div>
   );
 
   return content;

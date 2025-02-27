@@ -113,14 +113,14 @@ const UpdateServiceForm = ({ service }: propsType) => {
       {modifyName ? (
         <>
           <label className="offscreen" htmlFor="name">
-            Name
+            Nom
           </label>
           <input
             type="text"
             className="input"
             id="name"
             autoComplete="off"
-            placeholder="name"
+            placeholder="Nom du Service"
             value={name}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setName(e.target.value.trim())
@@ -131,12 +131,12 @@ const UpdateServiceForm = ({ service }: propsType) => {
           </span>
         </>
       ) : (
-        <h1>
-          {service.name}{" "}
+        <h2>
+          {service.name}
           <span>
             <FaEdit onClick={() => setModifyName(true)} />
           </span>
-        </h1>
+        </h2>
       )}
       <label htmlFor="description" className="offscreen">
         Description
@@ -145,21 +145,21 @@ const UpdateServiceForm = ({ service }: propsType) => {
         id="description"
         autoComplete="off"
         className="textarea"
-        placeholder="Enter the description of your service"
+        placeholder="Description du Service"
         value={description}
         onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
           setDescription(e.target.value.trim())
         }
       ></textarea>
       <label htmlFor="price" className="offscreen">
-        Price
+        Prix:
       </label>
       <input
         type="text"
         id="price"
         className="input"
         autoComplete="off"
-        placeholder="price"
+        placeholder="Prix"
         value={updatedPrice}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           setUpdatedPrice(e.target.value.trim())
@@ -167,14 +167,14 @@ const UpdateServiceForm = ({ service }: propsType) => {
       />
       <span>$</span>
       <label htmlFor="duration" className="offscreen">
-        Duration
+        Durée:
       </label>
       <input
         type="text"
         id="duration"
         className="input"
         autoCapitalize="off"
-        placeholder="duration"
+        placeholder="Durée"
         value={updatedDuration}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           setUpdatedDuration(e.target.value.trim())

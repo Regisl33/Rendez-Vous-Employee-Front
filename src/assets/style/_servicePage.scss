@@ -74,5 +74,34 @@
     width: 100%;
     padding: 10px;
     margin: 5px;
+
+    .service-container {
+      border: 1px solid $color1;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 650px;
+      padding: 10px;
+      margin: 10px auto;
+      display: grid;
+      grid-template-columns: 25% 75%;
+
+      &:hover {
+        transform: scale(102%);
+      }
+
+      h3 {
+        letter-spacing: 1px;
+        font-family: $font2;
+        font-size: 1.1rem;
+        cursor: pointer;
+        margin: 10px auto;
+        text-transform: capitalize;
+      }
+      .active-container {
+        border-right: 1px solid $color1;
+        @include justify(center);
+        gap: 5px;
+      }
+    }
   }
 }
