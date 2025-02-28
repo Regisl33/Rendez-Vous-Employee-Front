@@ -105,3 +105,63 @@
     }
   }
 }
+.update-form-container {
+  @include justify(center);
+  margin-top: 25px;
+
+  .update-service-form {
+    display: grid;
+    width: 90%;
+    max-width: 600px;
+    gap: 15px;
+  }
+
+  h2 {
+    letter-spacing: 1px;
+    font-family: $font2;
+    @include justify(center);
+    gap: 5px;
+    text-transform: capitalize;
+
+    svg {
+      font-size: 2rem;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(102%);
+      }
+    }
+  }
+
+  .modify-name-container {
+    position: relative;
+
+    input {
+      width: 100%;
+    }
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 95%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5rem;
+      @include justify(center);
+      cursor: pointer;
+      color: $color1;
+      transition: 0.2s ease;
+
+      &:hover {
+        color: $color2;
+      }
+
+      &:active {
+        color: rgb(25, 201, 25);
+      }
+    }
+  }
+}
+.active-service {
+  @include justify(center);
+  gap: 5px;
+}

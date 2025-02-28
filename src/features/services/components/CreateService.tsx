@@ -23,6 +23,19 @@ export const categories: AppointementCategorie[] = [
   "Injection et Prélevements",
 ];
 
+export const displayMethods = (m: AppointementMethod): string => {
+  switch (m) {
+    case "online":
+      return "En Ligne";
+    case "phone":
+      return "Par Téléphone";
+    case "none":
+      return "Sans-Rendez-Vous";
+    default:
+      return "Par Téléphone";
+  }
+};
+
 const CreateService = () => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -69,19 +82,6 @@ const CreateService = () => {
   useEffect(() => {
     if (message.length > 0) messageRef.current?.focus;
   }, [message, messageRef]);
-
-  const displayMethods = (m: AppointementMethod): string => {
-    switch (m) {
-      case "online":
-        return "En Ligne";
-      case "phone":
-        return "Par Téléphone";
-      case "none":
-        return "Sans-Rendez-Vous";
-      default:
-        return "Par Téléphone";
-    }
-  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
