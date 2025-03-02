@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 import { useGetServiceByStoreQuery } from "../serviceSlice";
-import { AppointementCategorie, ServiceType } from "../../../types/Service";
+import { CategoriePropsType, ServiceType } from "../../../types/Service";
 import ServiceDisplay from "./ServiceDisplay";
 
-type propsType = {
-  cat: AppointementCategorie;
-};
-
-const ServicesByCategorie = ({ cat }: propsType) => {
+const ServicesByCategorie = ({ cat }: CategoriePropsType) => {
   const storeID: string = "1234";
   const {
     data: serviceData,

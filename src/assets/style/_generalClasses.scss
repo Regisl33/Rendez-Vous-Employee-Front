@@ -59,6 +59,7 @@
   transition: 0.2s ease-in-out;
   position: relative;
   text-transform: capitalize;
+  z-index: 2;
 
   svg {
     font-size: 1.5rem;
@@ -96,6 +97,10 @@
 
       &:hover {
         background: $color2;
+      }
+
+      &:last-child {
+        border-radius: 0 0 10px 10px;
       }
     }
   }
@@ -135,6 +140,9 @@
   &:hover:enabled::before {
     height: 100%;
     width: 100%;
+  }
+  &:active::before {
+    background: $color4;
   }
   &:disabled {
     opacity: 0.3;

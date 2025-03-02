@@ -14,6 +14,11 @@
   height: 20vh;
   color: $white1;
   @include justify(center);
+
+  h1 {
+    @include title(2rem);
+    text-shadow: 1px 2px 5px $shadow3;
+  }
 }
 
 .main-container {
