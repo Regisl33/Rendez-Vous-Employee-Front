@@ -55,6 +55,11 @@ export type CategoriePropsType = {
   cat: AppointementCategorie;
 };
 
+export type TextAreaPropsType = {
+  description: string;
+  setDescription: React.Dispatch<React.SetStateAction<string>>;
+};
+
 export type ServiceParamProps = {
   price: string;
   setPrice: React.Dispatch<React.SetStateAction<string>>;

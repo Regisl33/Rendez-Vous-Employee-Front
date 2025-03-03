@@ -4,39 +4,12 @@ import {
   AddService,
   AppointementCategorie,
   AppointementMethod,
-} from "../../../types/Service";
+} from "../types/Service";
 import ServiceParams from "./ServiceParams";
-
-export const methods: AppointementMethod[] = ["online", "phone", "none"];
-export const categories: AppointementCategorie[] = [
-  "Santé de la Bouche",
-  "Santé de la Femme",
-  "Santé de la Peau",
-  "Soin des Yeux",
-  "Santé Digestive",
-  "Santé Voyage",
-  "Santé des Oreilles",
-  "Soin des Pieds",
-  "Cholestérol",
-  "Diabète",
-  "Hypertension",
-  "Injection et Prélevements",
-];
-
-export const displayMethods = (m: AppointementMethod): string => {
-  switch (m) {
-    case "online":
-      return "En Ligne";
-    case "phone":
-      return "Par Téléphone";
-    case "none":
-      return "Sans-Rendez-Vous";
-    default:
-      return "Par Téléphone";
-  }
-};
+import ServiceTextInput from "./ServiceTextInput";
 
 const CreateService = () => {
+  //States
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [price, setPrice] = useState<string>("15");
@@ -47,22 +20,26 @@ const CreateService = () => {
   );
   const [isValid, setIsValid] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-
+  //Refs
   const nameRef = useRef<HTMLInputElement>(null);
   const messageRef = useRef<HTMLParagraphElement>(null);
-
+  //Regex
   const numberRegExp = /[^0-9]/g;
-
+  //Custom Mutation
   const [CreateService] = useCreateServiceMutation();
-
+  //UseRef Effect for Name
   useEffect(() => {
     if (nameRef.current) nameRef.current.focus;
   }, [nameRef]);
-
+  //UseRef Effect for Error
+  useEffect(() => {
+    if (message.length > 0) messageRef.current?.focus;
+  }, [message, messageRef]);
+  //Remove Error Message
   useEffect(() => {
     setMessage("");
   }, [price, duration]);
-
+  //Check if all the data entered is valid and display an error if needed
   useEffect(() => {
     if (
       name.length > 0 &&
@@ -78,11 +55,7 @@ const CreateService = () => {
       setIsValid(false);
     }
   }, [name, description, price, duration]);
-
-  useEffect(() => {
-    if (message.length > 0) messageRef.current?.focus;
-  }, [message, messageRef]);
-
+  //Submit function
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -106,6 +79,26 @@ const CreateService = () => {
     }
   };
 
+  const nameInput = (
+    <>
+      <label className="offscreen" htmlFor="name">
+        Nom
+      </label>
+      <input
+        type="text"
+        className="input"
+        id="name"
+        autoComplete="off"
+        placeholder="Nom du Service"
+        ref={nameRef}
+        value={name}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          setName(e.target.value.toLowerCase().trim())
+        }
+      />
+    </>
+  );
+
   const content = (
     <div className="service-form-container">
       <p
@@ -115,34 +108,11 @@ const CreateService = () => {
         {message}
       </p>
       <form className="service-form" onSubmit={handleSubmit}>
-        <label className="offscreen" htmlFor="name">
-          Nom
-        </label>
-        <input
-          type="text"
-          className="input"
-          id="name"
-          autoComplete="off"
-          placeholder="Nom du Service"
-          ref={nameRef}
-          value={name}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setName(e.target.value.toLowerCase().trim())
-          }
+        {nameInput}
+        <ServiceTextInput
+          description={description}
+          setDescription={setDescription}
         />
-        <label htmlFor="description" className="offscreen">
-          Description
-        </label>
-        <textarea
-          id="description"
-          className="textarea"
-          autoComplete="off"
-          placeholder="Description du Service"
-          value={description}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-            setDescription(e.target.value.trim())
-          }
-        ></textarea>
         <ServiceParams
           price={price}
           setPrice={setPrice}

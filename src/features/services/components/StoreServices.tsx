@@ -1,8 +1,9 @@
-import { categories } from "./CreateService";
-import ServicesByCategorie from "./ServicesByCategorie";
 import { useNavigate } from "react-router-dom";
+import ServicesByCategorie from "./ServicesByCategorie";
+import { categories } from "../data/methodAndCategorie";
 
 const StoreServices = () => {
+  //Hooks
   const navigate = useNavigate();
 
   const content = (

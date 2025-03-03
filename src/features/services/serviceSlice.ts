@@ -1,10 +1,6 @@
-import api from "../../app/api/api";
-import {
-  AddService,
-  ServiceType,
-  UpdateServiceType,
-} from "../../types/Service";
 import { createEntityAdapter } from "@reduxjs/toolkit";
+import api from "../../app/api/api";
+import { AddService, ServiceType, UpdateServiceType } from "./types/Service";
 
 const servicesAdapter = createEntityAdapter({
   selectId: (service: ServiceType) => service.id,
@@ -53,9 +49,7 @@ const serviceSlice = api.injectEndpoints({
         method: "PATCH",
         body: updatedService,
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: "Services", id: arg.id },
-      ],
+      invalidatesTags: (arg) => [{ type: "Services", id: arg.id }],
     }),
   }),
 });

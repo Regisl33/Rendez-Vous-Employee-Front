@@ -142,7 +142,7 @@
     width: 100%;
   }
   &:active::before {
-    background: $color4;
+    background: $color3;
   }
   &:disabled {
     opacity: 0.3;
@@ -150,6 +150,6 @@
   }
 }
 .errorMsg {
-  color: $color3;
+  color: $color4;
   letter-spacing: 1px;
 }
