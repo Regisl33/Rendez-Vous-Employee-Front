@@ -18,7 +18,7 @@ export const updateStoreID = (
 ): string[] => {
   let updatedStoreID: string[] = [];
   if (storeID) {
-    updatedStoreID = storeID;
+    updatedStoreID = [...storeID];
     if (checked) {
       storeID.includes(storeNum) ? null : updatedStoreID.push(storeNum);
     } else {
@@ -56,7 +56,7 @@ const ServiceDisplay = ({ service }: ServicePropsType) => {
       appointementMethod: service.appointementMethod,
       appointementCategorie: service.appointementCategorie,
       baseService: service.baseService,
-      storeID,
+      storeID: updatedIDS,
       id: service.id,
       createdAt: service.createdAt,
       updatedAt: service.updatedAt,
@@ -88,7 +88,7 @@ const ServiceDisplay = ({ service }: ServicePropsType) => {
             type="checkbox"
             checked={isChecked}
             onClick={() => HandleServiceActivation(!isChecked)}
-            onChange={() => console.log(isChecked)}
+            onChange={() => console.log(!isChecked)}
           />
           <svg viewBox="0 0 35.6 35.6">
             <circle

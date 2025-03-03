@@ -10,6 +10,7 @@ import ServiceParams from "./ServiceParams";
 import { FaEdit } from "react-icons/fa";
 import { CiCircleCheck } from "react-icons/ci";
 import { isActivated, updateStoreID } from "./ServiceDisplay";
+import { useNavigate } from "react-router-dom";
 
 const UpdateServiceForm = ({ service }: ServicePropsType) => {
   const [name, setName] = useState<string>(service.name);
@@ -36,6 +37,7 @@ const UpdateServiceForm = ({ service }: ServicePropsType) => {
 
   const numberRegExp = /[^0-9]/g;
 
+  const navigate = useNavigate();
   const [UpdateService] = useUpdateServiceMutation();
 
   const HandleServiceActivation = (checked: boolean) => {
@@ -74,6 +76,7 @@ const UpdateServiceForm = ({ service }: ServicePropsType) => {
       if (err instanceof Error) setMessage(err?.message);
       console.error(err);
     }
+    navigate(-1);
   };
 
   useEffect(() => {
