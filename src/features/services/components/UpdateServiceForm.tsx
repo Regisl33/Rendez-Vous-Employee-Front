@@ -235,7 +235,10 @@ const UpdateServiceForm = ({ service }: propsType) => {
         Save
       </button>
 
-      <p ref={messageRef} className={message.length > 0 ? "" : "offscreen"}>
+      <p
+        ref={messageRef}
+        className={message.length > 0 ? "errorMsg" : "offscreen"}
+      >
         {message}
       </p>
     </form>
