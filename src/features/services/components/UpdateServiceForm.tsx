@@ -3,18 +3,16 @@ import {
   ServiceType,
   AppointementCategorie,
   AppointementMethod,
+  ServicePropsType,
 } from "../../../types/Service";
 import { useUpdateServiceMutation } from "../serviceSlice";
-import { categories, displayMethods, methods } from "./CreateService";
-import { RiArrowDropDownLine } from "react-icons/ri";
+import ServiceParams from "./ServiceParams";
 import { FaEdit } from "react-icons/fa";
 import { CiCircleCheck } from "react-icons/ci";
+import { isActivated, updateStoreID } from "./ServiceDisplay";
+import { useNavigate } from "react-router-dom";
 
-type propsType = {
-  service: ServiceType;
-};
-
-const UpdateServiceForm = ({ service }: propsType) => {
+const UpdateServiceForm = ({ service }: ServicePropsType) => {
   const [name, setName] = useState<string>(service.name);
   const [modifyName, setModifyName] = useState(false);
   const [description, setDescription] = useState<string>(service.description);
@@ -29,14 +27,24 @@ const UpdateServiceForm = ({ service }: propsType) => {
     service.appointementCategorie
   );
   const [storeID, setStoreID] = useState(service.storeID);
+  const [isChecked, setIsChecked] = useState(false);
   const [isValid, setIsValid] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+
+  const storeNum = "1234";
 
   const messageRef = useRef<HTMLParagraphElement>(null);
 
   const numberRegExp = /[^0-9]/g;
 
+  const navigate = useNavigate();
   const [UpdateService] = useUpdateServiceMutation();
+
+  const HandleServiceActivation = (checked: boolean) => {
+    let updatedIDS = updateStoreID(storeID, storeNum, checked);
+    setStoreID(updatedIDS);
+    setIsChecked(checked);
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -68,7 +76,12 @@ const UpdateServiceForm = ({ service }: propsType) => {
       if (err instanceof Error) setMessage(err?.message);
       console.error(err);
     }
+    navigate(-1);
   };
+
+  useEffect(() => {
+    if (isActivated(service, storeNum)) setIsChecked(true);
+  }, [service, storeNum]);
 
   useEffect(() => {
     setMessage("");
@@ -109,7 +122,7 @@ const UpdateServiceForm = ({ service }: propsType) => {
   }, [message, messageRef]);
 
   const content = (
-    <form className="update-service-form">
+    <form className="update-service-form" onSubmit={handleSubmit}>
       {modifyName ? (
         <div className="modify-name-container">
           <label className="offscreen" htmlFor="name">
@@ -151,88 +164,32 @@ const UpdateServiceForm = ({ service }: propsType) => {
           setDescription(e.target.value.trim())
         }
       ></textarea>
-      <div className="param-container">
-        <div className="grid-container">
-          <div className="price-container">
-            <label htmlFor="price">Prix:</label>
-            <input
-              type="text"
-              id="price"
-              className="input"
-              autoComplete="off"
-              placeholder="Prix"
-              value={updatedPrice}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setUpdatedPrice(e.target.value.trim())
-              }
-            />
-            <span>$</span>
-          </div>
-          <div className="duration-container">
-            <label htmlFor="duration">Durée:</label>
-            <input
-              type="text"
-              id="duration"
-              className="input"
-              autoCapitalize="off"
-              placeholder="Durée"
-              value={updatedDuration}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setUpdatedDuration(e.target.value.trim())
-              }
-            />
-            <span>Min</span>
-          </div>
-          <div className="select-method-container">
-            <label htmlFor="custom-select-method">
-              Méthode pour prendre Rendez-Vous:
-            </label>
-            <div
-              className="select-custom select-method"
-              id="custom-select-method"
-            >
-              {displayMethods(method)} <RiArrowDropDownLine />
-              <ul>
-                {methods.map((m: AppointementMethod) => (
-                  <li key={m} onClick={() => setMethod(m)}>
-                    {displayMethods(m)}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div className="select-category-container">
-          <label htmlFor="custom-select-category">
-            Définir la Catégorie du Service:
-          </label>
-          <div
-            className="select-custom select-category"
-            id="custom-select-category"
-          >
-            {categorie} <RiArrowDropDownLine />
-            <ul>
-              {categories.map((c: AppointementCategorie) => (
-                <li key={c} onClick={() => setCategorie(c)}>
-                  {c}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
+      <ServiceParams
+        price={updatedPrice}
+        setPrice={setUpdatedPrice}
+        duration={updatedDuration}
+        setDuration={setUpdatedDuration}
+        method={method}
+        setMethod={setMethod}
+        categorie={categorie}
+        setCategorie={setCategorie}
+      />
       <div className="active-service">
-        <label htmlFor="active-switch">Activer le Service</label>
+        <label htmlFor="active-switch">
+          {isChecked ? "Désactiver le Service" : "Activer le Service"}
+        </label>
         <div className="checkbox-wrapper-50" id="active-switch">
-          <input type="checkbox" className="plus-minus" />
+          <input
+            type="checkbox"
+            className="plus-minus"
+            checked={isChecked}
+            onClick={() => HandleServiceActivation(!isChecked)}
+            onChange={() => console.log(isChecked)}
+          />
         </div>
       </div>
-      <button
-        onClick={(e: FormEvent) => handleSubmit(e)}
-        className="btn"
-        disabled={isValid ? false : true}
-      >
-        Save
+      <button className="btn" disabled={isValid ? false : true}>
+        Mettre à Jour
       </button>
 
       <p

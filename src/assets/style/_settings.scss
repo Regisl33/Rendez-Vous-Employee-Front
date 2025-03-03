@@ -1,11 +1,14 @@
 //Colors
-$color1: #6600ff;
-$color2: #6699ff;
-$color3: red;
+$color1: rgb(55, 0, 255);
+$color2: rgb(27, 132, 252);
+$color4: rgb(130, 205, 255);
+$color3: rgb(214, 20, 20);
 $black1: rgb(9, 9, 9);
 $grey1: rgb(168, 168, 168);
-$white1: whitesmoke;
-
+$white1: rgb(245, 245, 245);
+$shadow1: rgba(9, 9, 9, 0.39);
+$shadow2: rgba(168, 168, 168, 0.486);
+$shadow3: rgba(245, 245, 245, 0.486);
 //Fonts
 @font-face {
   font-family: "font1";
@@ -24,6 +27,12 @@ $font2: "font2", sans-serif;
   display: flex;
   justify-content: $position;
   align-items: center;
+}
+@mixin title($font-size) {
+  font-family: $font2;
+  letter-spacing: 1px;
+  font-size: $font-size;
+  text-shadow: 1px 2px 5px $shadow1;
 }
 
 //General Settings
