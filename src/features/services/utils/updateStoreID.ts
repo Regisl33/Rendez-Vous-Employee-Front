@@ -12,10 +12,10 @@ const updateStoreID = (
       let tempArray: string[] = [];
       storeID.includes(storeNum)
         ? (tempArray = updatedStoreID.filter((store) => store !== storeNum))
-        : null;
+        : (tempArray = updatedStoreID);
       updatedStoreID = tempArray;
     }
-  } else {
+  } else if (checked) {
     updatedStoreID = [storeNum];
   }
   return updatedStoreID;

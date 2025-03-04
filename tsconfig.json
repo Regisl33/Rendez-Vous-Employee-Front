@@ -3,5 +3,19 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    // Emit Configuration
+    "noEmit": true,
+
+    // Modules Configuration
+    "module": "ES2022",
+
+    // Language and Environment Configuration
+    "target": "ES2022",
+    "jsx": "react-jsx",
+
+    // Interop Constraints Configuration
+    "esModuleInterop": true
+  }
 }
