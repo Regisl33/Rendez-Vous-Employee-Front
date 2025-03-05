@@ -73,6 +73,7 @@ const CreateService = () => {
       setDescription("");
       setPrice("15");
       setDuration("15");
+      setMessage("");
     } catch (err) {
       if (err instanceof Error) setMessage(err?.message);
       console.error(err);

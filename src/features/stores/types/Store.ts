@@ -38,7 +38,7 @@ export type OpeningHoursType = {
   Saturday: Day;
 };
 
-export type country =
+export type Country =
   | "AB"
   | "BC"
   | "PE"
@@ -59,7 +59,7 @@ type StoreType = {
   storeName: string;
   storeAdress: string;
   storeCity: string;
-  storeCountry: country;
+  storeCountry: Country;
   storePhone: string;
   roles?: string[];
   openingHours: OpeningHoursType;
@@ -78,7 +78,7 @@ export type AddStore = {
   storeName: string;
   storeAdress: string;
   storeCity: string;
-  storeCountry: country;
+  storeCountry: Country;
   storePhone: string;
   openingHours: OpeningHoursType;
 };
