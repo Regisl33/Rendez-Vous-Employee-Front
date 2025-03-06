@@ -25,11 +25,11 @@ const OpeningHoursSelector = () => {
     <div className="select-day-container">
       <label htmlFor="custom-select-day">Jours :</label>
       <div className="select-custom select-day" id="custom-select-day">
-        {storeCountry} <RiArrowDropDownLine />
+        {selectedDay} <RiArrowDropDownLine />
         <ul>
-          {provinces.map((co: Country) => (
-            <li key={co} onClick={() => setStoreCountry(co)}>
-              {co}
+          {[...week, ...weekend].map((day: weekdays) => (
+            <li key={day} onClick={() => setSelectedDay(day)}>
+              {day}
             </li>
           ))}
         </ul>
