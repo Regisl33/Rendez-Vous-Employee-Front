@@ -29,13 +29,13 @@ type Day = {
 };
 
 export type OpeningHoursType = {
-  Sunday: Day;
-  Monday: Day;
-  Tuesday: Day;
-  Wednesday: Day;
-  Thursday: Day;
-  Friday: Day;
-  Saturday: Day;
+  Dimanche: Day;
+  Lundi: Day;
+  Mardi: Day;
+  Mercredi: Day;
+  Jeudi: Day;
+  Vendredi: Day;
+  Samedi: Day;
 };
 
 export type Country =

@@ -3,6 +3,7 @@ import { AddStore, Country, OpeningHoursType } from "../types/Store";
 import { useCreateStoreMutation } from "../storeSlice";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import provinces from "../data/ProvinceData";
+import OpeningHoursSelector from "./OpeningHoursSelector";
 
 const CreateStore = () => {
   //States
@@ -211,6 +212,10 @@ const CreateStore = () => {
         {storeCityInput}
         {storeCountrySelect}
         {storePhoneInput}
+        <OpeningHoursSelector
+          openingHours={openingHours}
+          setOpeningHours={setOpeningHours}
+        />
         <button className="btn" disabled={isValid ? false : true}>
           Create Service
         </button>
