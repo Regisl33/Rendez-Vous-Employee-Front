@@ -1,51 +1,61 @@
 import { useState, useEffect } from "react";
-import { OpeningHoursType } from "../types/Store";
+import { OpeningHoursType, DayOptions } from "../types/Store";
 import { RiArrowDropDownLine } from "react-icons/ri";
-
-const week = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"] as const;
-const weekend = ["Samedi", "Dimanche"] as const;
-
-type weekdays =
-  | "Lundi"
-  | "Mardi"
-  | "Mercredi"
-  | "Jeudi"
-  | "Vendredi"
-  | "Samedi"
-  | "Dimanche";
+import { Hours } from "../data/Hours";
+import displayHours from "../utils/displayHours";
+import OpeningDay from "./OpeningDay";
 
 type propsType = {
-  openingHours: OpeningHoursType | undefined;
-  setOpeningHours: React.Dispatch<
-    React.SetStateAction<OpeningHoursType | undefined>
-  >;
+  openingHours: OpeningHoursType;
+  setOpeningHours: React.Dispatch<React.SetStateAction<OpeningHoursType>>;
 };
 
 const OpeningHoursSelector = ({ openingHours, setOpeningHours }: propsType) => {
-  const [selectedDays, setSelectedDays] = useState<weekdays[]>([]);
-  const [selectedDay, setSelectedDay] = useState<weekdays>("Lundi");
+  const [globalOpen, setGlobalOpen] = useState<DayOptions>(0);
+  const [globalClose, setGlobalClose] = useState<DayOptions>(0);
   const [isWeekChecked, setIsWeekChecked] = useState(false);
   const [isWeekendChecked, setIsWeekendChecked] = useState(false);
 
   useEffect(() => {
+    let tempHourArray: OpeningHoursType = [...openingHours];
     if (isWeekChecked && isWeekendChecked) {
-      setSelectedDays([...week, ...weekend]);
+      for (let i = 0; i < 7; i++) {
+        tempHourArray[i].open = globalOpen;
+        tempHourArray[i].close = globalClose;
+      }
+      setOpeningHours(tempHourArray);
     } else if (isWeekChecked) {
-      setSelectedDays([...week]);
+      let newTempArray = tempHourArray.filter(
+        (day) => day.day !== "Dimanche" || "Samedi"
+      );
+      let hoursBackup = tempHourArray.filter(
+        (day) => day.day === "Dimanche" || "Samedi"
+      );
+      for (let i = 0; i < 5; i++) {
+        newTempArray[i].open = globalOpen;
+        newTempArray[i].close = globalClose;
+      }
+      let newArray = [...hoursBackup, ...newTempArray].sort(
+        (a, b) => a.pos - b.pos
+      );
+      setOpeningHours(newArray);
     } else if (isWeekendChecked) {
-      setSelectedDays([...weekend]);
+      let newTempArray = tempHourArray.filter(
+        (day) => day.day === "Dimanche" || "Samedi"
+      );
+      let hoursBackup = tempHourArray.filter(
+        (day) => day.day !== "Dimanche" || "Samedi"
+      );
+      for (let i = 0; i < 5; i++) {
+        newTempArray[i].open = globalOpen;
+        newTempArray[i].close = globalClose;
+      }
+      let newArray = [...hoursBackup, ...newTempArray].sort(
+        (a, b) => a.pos - b.pos
+      );
+      setOpeningHours(newArray);
     }
   }, [isWeekChecked, isWeekendChecked]);
-
-  useEffect(() => {
-    let newArray: weekdays[] = [...selectedDays];
-    if (newArray.includes(selectedDay)) {
-      setSelectedDays(newArray.filter((day) => day !== selectedDay));
-    } else {
-      newArray.push(selectedDay);
-      setSelectedDays(newArray);
-    }
-  }, [selectedDay, selectedDays]);
 
   const weekCheck = (
     <div className="checkbox-container">
@@ -85,15 +95,34 @@ const OpeningHoursSelector = ({ openingHours, setOpeningHours }: propsType) => {
       </div>
     </div>
   );
-  const DayCustomSelect = (
-    <div className="select-day-container">
-      <label htmlFor="custom-select-day">Jours :</label>
-      <div className="select-custom select-day" id="custom-select-day">
-        {selectedDay} <RiArrowDropDownLine />
+  const openCustomSelect = (
+    <div className="select-open-container">
+      <label htmlFor="custom-select-open" className="offscreen">
+        Ouvre :
+      </label>
+      <div className="select-custom select-open" id="custom-select-open">
+        {globalOpen} <RiArrowDropDownLine />
         <ul>
-          {[...week, ...weekend].map((day: weekdays) => (
-            <li key={day} onClick={() => setSelectedDay(day)}>
-              {day}
+          {Hours.map((hour: DayOptions) => (
+            <li key={hour} onClick={() => setGlobalOpen(hour)}>
+              {displayHours(hour)}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+  const closeCustomSelect = (
+    <div className="select-close-container">
+      <label htmlFor="custom-select-close" className="offscreen">
+        Ferme :
+      </label>
+      <div className="select-custom select-close" id="custom-select-close">
+        {globalClose} <RiArrowDropDownLine />
+        <ul>
+          {Hours.map((hour: DayOptions) => (
+            <li key={hour} onClick={() => setGlobalClose(hour)}>
+              {displayHours(hour)}
             </li>
           ))}
         </ul>
@@ -105,7 +134,15 @@ const OpeningHoursSelector = ({ openingHours, setOpeningHours }: propsType) => {
     <div className="hours-selector-container">
       {weekCheck}
       {weekendCheck}
-      {DayCustomSelect}
+      {openCustomSelect}
+      {closeCustomSelect}
+      {openingHours.map((day) => (
+        <OpeningDay
+          day={day}
+          openingHours={openingHours}
+          setOpeningHours={setOpeningHours}
+        />
+      ))}
     </div>
   );
   return content;

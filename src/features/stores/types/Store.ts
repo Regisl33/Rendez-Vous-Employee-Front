@@ -23,20 +23,25 @@ export type DayOptions =
   | 22
   | 23
   | 0;
-type Day = {
+
+export type Weekdays =
+  | "Lundi"
+  | "Mardi"
+  | "Mercredi"
+  | "Jeudi"
+  | "Vendredi"
+  | "Samedi"
+  | "Dimanche";
+
+export type Day = {
+  pos: number;
+  day: Weekdays;
   open: DayOptions;
   close: DayOptions;
+  closed: boolean;
 };
 
-export type OpeningHoursType = {
-  Dimanche: Day;
-  Lundi: Day;
-  Mardi: Day;
-  Mercredi: Day;
-  Jeudi: Day;
-  Vendredi: Day;
-  Samedi: Day;
-};
+export type OpeningHoursType = Day[];
 
 export type Country =
   | "AB"

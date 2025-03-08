@@ -4,6 +4,7 @@ import { useCreateStoreMutation } from "../storeSlice";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import provinces from "../data/ProvinceData";
 import OpeningHoursSelector from "./OpeningHoursSelector";
+import baseOpeningHours from "../data/BaseOpeningHours";
 
 const CreateStore = () => {
   //States
@@ -13,7 +14,8 @@ const CreateStore = () => {
   const [storeCity, setStoreCity] = useState("");
   const [storeCountry, setStoreCountry] = useState<Country>("QC");
   const [storePhone, setStorePhone] = useState("");
-  const [openingHours, setOpeningHours] = useState<OpeningHoursType>();
+  const [openingHours, setOpeningHours] =
+    useState<OpeningHoursType>(baseOpeningHours);
   const [isValid, setIsValid] = useState(false);
   const [message, setMessage] = useState("");
   //Refs
@@ -82,7 +84,7 @@ const CreateStore = () => {
         setStoreCity("");
         setStoreCountry("QC");
         setStorePhone("");
-        setOpeningHours(undefined);
+        setOpeningHours(baseOpeningHours);
       } catch (err) {
         if (err instanceof Error) setMessage(err?.message);
         console.error(err);
