@@ -96,7 +96,9 @@ const CreateStore = () => {
 
   const storeNumberInput = (
     <div className="store-num-container">
-      <label htmlFor="storeNum">Numéro de Succursale :</label>
+      <label htmlFor="storeNum" className="offscreen">
+        Numéro de Succursale :
+      </label>
       <input
         type="text"
         className="input"
@@ -200,14 +202,14 @@ const CreateStore = () => {
   );
 
   const content = (
-    <div className="service-form-container">
+    <div className="create-store-form">
       <p
         ref={messageRef}
         className={message.length > 0 ? "errorMsg" : "offscreen"}
       >
         {message}
       </p>
-      <form className="create-store-form" onSubmit={handleSubmit}>
+      <form className="store-form" onSubmit={handleSubmit}>
         {storeNumberInput}
         {storeNameInput}
         {storeAdressInput}
@@ -219,7 +221,7 @@ const CreateStore = () => {
           setOpeningHours={setOpeningHours}
         />
         <button className="btn" disabled={isValid ? false : true}>
-          Create Service
+          Create Store
         </button>
       </form>
     </div>

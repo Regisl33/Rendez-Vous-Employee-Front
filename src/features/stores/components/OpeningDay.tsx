@@ -31,7 +31,7 @@ const OpeningDay = ({ day, setOpeningHours, openingHours }: propsType) => {
       (a, b) => a.pos - b.pos
     );
     setOpeningHours(newArray);
-  }, [openingHours, setOpeningHours, open, close, closed]);
+  }, [open, close, closed]);
 
   const openCustomSelect = (
     <div className="select-open-container">
@@ -39,11 +39,12 @@ const OpeningDay = ({ day, setOpeningHours, openingHours }: propsType) => {
         Ouvre :
       </label>
       <div className="select-custom select-open" id="custom-select-open">
-        {open} <RiArrowDropDownLine />
+        {displayHours(open)}
+        {":00"} <RiArrowDropDownLine />
         <ul>
           {Hours.map((hour: DayOptions) => (
             <li key={hour} onClick={() => setOpen(hour)}>
-              {displayHours(hour)}
+              {displayHours(hour)}:00
             </li>
           ))}
         </ul>
@@ -56,11 +57,12 @@ const OpeningDay = ({ day, setOpeningHours, openingHours }: propsType) => {
         Ferme :
       </label>
       <div className="select-custom select-close" id="custom-select-close">
-        {close} <RiArrowDropDownLine />
+        {displayHours(close)}
+        {":00"} <RiArrowDropDownLine />
         <ul>
           {Hours.map((hour: DayOptions) => (
             <li key={hour} onClick={() => setClose(hour)}>
-              {displayHours(hour)}
+              {displayHours(hour)}:00
             </li>
           ))}
         </ul>

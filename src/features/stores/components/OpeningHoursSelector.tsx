@@ -138,6 +138,7 @@ const OpeningHoursSelector = ({ openingHours, setOpeningHours }: propsType) => {
       {closeCustomSelect}
       {openingHours.map((day) => (
         <OpeningDay
+          key={day.day}
           day={day}
           openingHours={openingHours}
           setOpeningHours={setOpeningHours}

@@ -1,0 +1,34 @@
+@use "./settings" as *;
+
+.create-store-form {
+  width: 90%;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  gap: 10px;
+
+  .input,
+  .select-custom {
+    width: 60%;
+    margin: 0 auto;
+  }
+
+  .select-country-container {
+    @include justify(center);
+    gap: 20px;
+
+    .select-country {
+      width: 20%;
+    }
+  }
+
+  .store-form {
+    display: grid;
+    gap: 10px;
+  }
+
+  .hours-selector-container {
+    display: grid;
+    gap: 10px;
+  }
+}
