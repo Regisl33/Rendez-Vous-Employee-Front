@@ -95,7 +95,7 @@ const CreateStore = () => {
   };
 
   const storeNumberInput = (
-    <div className="store-num-container">
+    <>
       <label htmlFor="storeNum" className="offscreen">
         Numéro de Succursale :
       </label>
@@ -110,10 +110,10 @@ const CreateStore = () => {
           setStoreNumber(e.target.value.trim())
         }
       />
-    </div>
+    </>
   );
   const storeNameInput = (
-    <div className="store-name-container">
+    <>
       <label htmlFor="storeName" className="offscreen">
         Nom de la Succursale
       </label>
@@ -129,7 +129,7 @@ const CreateStore = () => {
           setStoreName(e.target.value.toLowerCase().trim())
         }
       />
-    </div>
+    </>
   );
   const storeAdressInput = (
     <div className="store-adress-container">
@@ -144,7 +144,7 @@ const CreateStore = () => {
         placeholder="Adresse"
         value={storeAdress}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setStoreAdress(e.target.value.toLowerCase().trim())
+          setStoreAdress(e.target.value.toLowerCase())
         }
       />
     </div>
@@ -183,7 +183,7 @@ const CreateStore = () => {
     </div>
   );
   const storePhoneInput = (
-    <div className="store-phone-container">
+    <>
       <label htmlFor="storePhone" className="offscreen">
         Téléphone
       </label>
@@ -198,7 +198,7 @@ const CreateStore = () => {
           setStorePhone(e.target.value.trim())
         }
       />
-    </div>
+    </>
   );
 
   const content = (
@@ -210,12 +210,16 @@ const CreateStore = () => {
         {message}
       </p>
       <form className="store-form" onSubmit={handleSubmit}>
-        {storeNumberInput}
-        {storeNameInput}
+        <div className="store-name-container">
+          {storeNumberInput}
+          {storeNameInput}
+        </div>
         {storeAdressInput}
         {storeCityInput}
-        {storeCountrySelect}
-        {storePhoneInput}
+        <div className="country-phone-form">
+          {storeCountrySelect}
+          {storePhoneInput}
+        </div>
         <OpeningHoursSelector
           openingHours={openingHours}
           setOpeningHours={setOpeningHours}

@@ -1,9 +1,4 @@
 export type DayOptions =
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
   | 6
   | 7
   | 8
@@ -20,9 +15,7 @@ export type DayOptions =
   | 19
   | 20
   | 21
-  | 22
-  | 23
-  | 0;
+  | 22;
 
 export type Weekdays =
   | "Lundi"
@@ -36,8 +29,8 @@ export type Weekdays =
 export type Day = {
   pos: number;
   day: Weekdays;
-  open: DayOptions;
-  close: DayOptions;
+  open?: DayOptions;
+  close?: DayOptions;
   closed: boolean;
 };
 

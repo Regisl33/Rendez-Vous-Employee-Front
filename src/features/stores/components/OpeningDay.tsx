@@ -12,9 +12,30 @@ type propsType = {
 };
 
 const OpeningDay = ({ day, setOpeningHours, openingHours }: propsType) => {
-  const [open, setOpen] = useState<DayOptions>(day.open);
-  const [close, setClose] = useState<DayOptions>(day.close);
+  const [open, setOpen] = useState<DayOptions | undefined>(day.open);
+  const [close, setClose] = useState<DayOptions | undefined>(day.close);
   const [closed, setClosed] = useState<boolean>(day.closed);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    setOpen(day.open);
+    setClose(day.close);
+    setClosed(day.closed);
+  }, [day.open, day.close, day.closed]);
+
+  useEffect(() => {
+    if (closed) {
+      setClose(undefined);
+      setOpen(undefined);
+      setError(false);
+    } else {
+      if (open && close && close - open > 0) {
+        setError(false);
+      } else {
+        setError(true);
+      }
+    }
+  }, [open, close, closed]);
 
   useEffect(() => {
     let hoursBackup: Day[] = [...openingHours].filter(
@@ -38,9 +59,19 @@ const OpeningDay = ({ day, setOpeningHours, openingHours }: propsType) => {
       <label htmlFor="custom-select-open" className="offscreen">
         Ouvre :
       </label>
-      <div className="select-custom select-open" id="custom-select-open">
-        {displayHours(open)}
-        {":00"} <RiArrowDropDownLine />
+      <div
+        className={closed ? "inactive-select" : "select-custom select-open"}
+        id="custom-select-open"
+      >
+        {open ? (
+          <>
+            {displayHours(open)}
+            {":00"} <RiArrowDropDownLine />
+          </>
+        ) : (
+          "--:--"
+        )}
+
         <ul>
           {Hours.map((hour: DayOptions) => (
             <li key={hour} onClick={() => setOpen(hour)}>
@@ -56,9 +87,19 @@ const OpeningDay = ({ day, setOpeningHours, openingHours }: propsType) => {
       <label htmlFor="custom-select-close" className="offscreen">
         Ferme :
       </label>
-      <div className="select-custom select-close" id="custom-select-close">
-        {displayHours(close)}
-        {":00"} <RiArrowDropDownLine />
+      <div
+        className={closed ? "inactive-select" : "select-custom select-close"}
+        id="custom-select-close"
+      >
+        {close ? (
+          <>
+            {displayHours(close)}
+            {":00"} <RiArrowDropDownLine />
+          </>
+        ) : (
+          "--:--"
+        )}
+
         <ul>
           {Hours.map((hour: DayOptions) => (
             <li key={hour} onClick={() => setClose(hour)}>
@@ -73,27 +114,39 @@ const OpeningDay = ({ day, setOpeningHours, openingHours }: propsType) => {
   const closedCheck = (
     <div className="checkbox-container">
       <label htmlFor="closedCheckbox">Fermé</label>
-      <div className="checkbox-wrapper-43" id="closedCheckbox">
-        <input
-          type="checkbox"
-          id="cbx-43b"
-          checked={closed}
-          onClick={() => setClosed(!closed)}
-        />
-        <label htmlFor="cbx-43b" className="check">
-          <svg width="18px" height="18px" viewBox="0 0 18 18">
-            <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-            <polyline points="1 9 7 14 15 4"></polyline>
+      <div className="checkbox-wrapper-30">
+        <span className="checkbox">
+          <input
+            type="checkbox"
+            checked={closed}
+            onClick={() => setClosed(!closed)}
+            onChange={() => console.log(!closed)}
+          />
+          <svg>
+            <use href="#checkbox-30" className="checkbox"></use>
           </svg>
-        </label>
+        </span>
+        <svg xmlns="http://www.w3.org/2000/svg" style={{ display: "none" }}>
+          <symbol id="checkbox-30" viewBox="0 0 22 22">
+            <path
+              fill="none"
+              stroke="currentColor"
+              d="M5.5,11.3L9,14.8L20.2,3.3l0,0c-0.5-1-1.5-1.8-2.7-1.8h-13c-1.7,0-3,1.3-3,3v13c0,1.7,1.3,3,3,3h13 c1.7,0,3-1.3,3-3v-13c0-0.4-0.1-0.8-0.3-1.2"
+            />
+          </symbol>
+        </svg>
       </div>
     </div>
   );
 
   const content = (
-    <div className="set-day-container">
+    <div
+      className={error ? "border-error set-day-container" : "set-day-container"}
+      style={{ zIndex: 10 - day.pos }}
+    >
       <h2>{day.day}</h2>
       {openCustomSelect}
+      <span>À</span>
       {closeCustomSelect}
       {closedCheck}
     </div>

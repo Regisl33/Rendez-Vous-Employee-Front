@@ -49,6 +49,23 @@
   position: absolute;
   left: -9999999px;
 }
+.inactive-select {
+  @include justify(center);
+  gap: 15px;
+  border: 1px solid $grey1;
+  border-radius: 10px;
+  padding: 10px;
+  position: relative;
+  text-transform: capitalize;
+  color: $grey1;
+
+  svg {
+    font-size: 1.5rem;
+  }
+  ul {
+    display: none;
+  }
+}
 .select-custom {
   @include justify(center);
   gap: 15px;
@@ -90,7 +107,7 @@
 
     li {
       letter-spacing: 1px;
-      padding: 10px;
+      padding: 4px;
       width: 100%;
       user-select: none;
       text-align: center;

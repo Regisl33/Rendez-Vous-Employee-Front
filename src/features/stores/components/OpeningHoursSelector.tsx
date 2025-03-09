@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { OpeningHoursType, DayOptions } from "../types/Store";
+import { OpeningHoursType, DayOptions, Day } from "../types/Store";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Hours } from "../data/Hours";
 import displayHours from "../utils/displayHours";
-import OpeningDay from "./OpeningDay";
+import OpeningHours from "./OpeningHours";
 
 type propsType = {
   openingHours: OpeningHoursType;
@@ -11,87 +11,109 @@ type propsType = {
 };
 
 const OpeningHoursSelector = ({ openingHours, setOpeningHours }: propsType) => {
-  const [globalOpen, setGlobalOpen] = useState<DayOptions>(0);
-  const [globalClose, setGlobalClose] = useState<DayOptions>(0);
+  const [globalOpen, setGlobalOpen] = useState<DayOptions>(6);
+  const [globalClose, setGlobalClose] = useState<DayOptions>(6);
   const [isWeekChecked, setIsWeekChecked] = useState(false);
   const [isWeekendChecked, setIsWeekendChecked] = useState(false);
 
-  useEffect(() => {
-    let tempHourArray: OpeningHoursType = [...openingHours];
+  const updateMultipleDay = (dayArray: Day[]): Day[] => {
+    let newArray: Day[] = [...dayArray];
+    for (let i = 0; i < newArray.length; i++) {
+      newArray[i].open = globalOpen;
+      newArray[i].close = globalClose;
+      newArray[i].closed = false;
+    }
+
+    return newArray;
+  };
+
+  const handleMultipleUpdate = () => {
+    let weekHourArray: OpeningHoursType = [];
+    let weekendHourArray: OpeningHoursType = [];
+
+    openingHours.map((day: Day) =>
+      day.day === "Dimanche" || day.day === "Samedi"
+        ? weekendHourArray.push(day)
+        : weekHourArray.push(day)
+    );
+
     if (isWeekChecked && isWeekendChecked) {
-      for (let i = 0; i < 7; i++) {
-        tempHourArray[i].open = globalOpen;
-        tempHourArray[i].close = globalClose;
-      }
-      setOpeningHours(tempHourArray);
+      let tempArray = updateMultipleDay([
+        ...weekHourArray,
+        ...weekendHourArray,
+      ]);
+      let newArray = tempArray.sort((a, b) => a.pos - b.pos);
+      setOpeningHours(newArray);
     } else if (isWeekChecked) {
-      let newTempArray = tempHourArray.filter(
-        (day) => day.day !== "Dimanche" || "Samedi"
-      );
-      let hoursBackup = tempHourArray.filter(
-        (day) => day.day === "Dimanche" || "Samedi"
-      );
-      for (let i = 0; i < 5; i++) {
-        newTempArray[i].open = globalOpen;
-        newTempArray[i].close = globalClose;
-      }
-      let newArray = [...hoursBackup, ...newTempArray].sort(
+      let result = updateMultipleDay(weekHourArray);
+      console.log(result);
+      let newArray = [...result, ...weekendHourArray].sort(
         (a, b) => a.pos - b.pos
       );
+      console.log(newArray, 2);
       setOpeningHours(newArray);
     } else if (isWeekendChecked) {
-      let newTempArray = tempHourArray.filter(
-        (day) => day.day === "Dimanche" || "Samedi"
-      );
-      let hoursBackup = tempHourArray.filter(
-        (day) => day.day !== "Dimanche" || "Samedi"
-      );
-      for (let i = 0; i < 5; i++) {
-        newTempArray[i].open = globalOpen;
-        newTempArray[i].close = globalClose;
-      }
-      let newArray = [...hoursBackup, ...newTempArray].sort(
+      let result = updateMultipleDay(weekendHourArray);
+      console.log(result);
+      let newArray = [...result, ...weekHourArray].sort(
         (a, b) => a.pos - b.pos
       );
+      console.log(newArray, 3);
       setOpeningHours(newArray);
     }
-  }, [isWeekChecked, isWeekendChecked]);
+  };
 
   const weekCheck = (
     <div className="checkbox-container">
       <label htmlFor="weekCheckbox">Semaine</label>
-      <div className="checkbox-wrapper-43" id="weekCheckbox">
-        <input
-          type="checkbox"
-          id="cbx-43a"
-          checked={isWeekChecked}
-          onClick={() => setIsWeekChecked(!isWeekChecked)}
-        />
-        <label htmlFor="cbx-43a" className="check">
-          <svg width="18px" height="18px" viewBox="0 0 18 18">
-            <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-            <polyline points="1 9 7 14 15 4"></polyline>
+      <div className="checkbox-wrapper-30">
+        <span className="checkbox">
+          <input
+            type="checkbox"
+            checked={isWeekChecked}
+            onClick={() => setIsWeekChecked(!isWeekChecked)}
+            onChange={() => console.log(!isWeekChecked)}
+          />
+          <svg>
+            <use href="#checkbox-30" className="checkbox"></use>
           </svg>
-        </label>
+        </span>
+        <svg xmlns="http://www.w3.org/2000/svg" style={{ display: "none" }}>
+          <symbol id="checkbox-30" viewBox="0 0 22 22">
+            <path
+              fill="none"
+              stroke="currentColor"
+              d="M5.5,11.3L9,14.8L20.2,3.3l0,0c-0.5-1-1.5-1.8-2.7-1.8h-13c-1.7,0-3,1.3-3,3v13c0,1.7,1.3,3,3,3h13 c1.7,0,3-1.3,3-3v-13c0-0.4-0.1-0.8-0.3-1.2"
+            />
+          </symbol>
+        </svg>
       </div>
     </div>
   );
   const weekendCheck = (
     <div className="checkbox-container">
       <label htmlFor="weekendCheckbox">Fin de Semaine</label>
-      <div className="checkbox-wrapper-43" id="weekendCheckbox">
-        <input
-          type="checkbox"
-          id="cbx-43b"
-          checked={isWeekendChecked}
-          onClick={() => setIsWeekendChecked(!isWeekendChecked)}
-        />
-        <label htmlFor="cbx-43b" className="check">
-          <svg width="18px" height="18px" viewBox="0 0 18 18">
-            <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-            <polyline points="1 9 7 14 15 4"></polyline>
+      <div className="checkbox-wrapper-30">
+        <span className="checkbox">
+          <input
+            type="checkbox"
+            checked={isWeekendChecked}
+            onClick={() => setIsWeekendChecked(!isWeekendChecked)}
+            onChange={() => console.log(!isWeekendChecked)}
+          />
+          <svg>
+            <use href="#checkbox-30" className="checkbox"></use>
           </svg>
-        </label>
+        </span>
+        <svg xmlns="http://www.w3.org/2000/svg" style={{ display: "none" }}>
+          <symbol id="checkbox-30" viewBox="0 0 22 22">
+            <path
+              fill="none"
+              stroke="currentColor"
+              d="M5.5,11.3L9,14.8L20.2,3.3l0,0c-0.5-1-1.5-1.8-2.7-1.8h-13c-1.7,0-3,1.3-3,3v13c0,1.7,1.3,3,3,3h13 c1.7,0,3-1.3,3-3v-13c0-0.4-0.1-0.8-0.3-1.2"
+            />
+          </symbol>
+        </svg>
       </div>
     </div>
   );
@@ -101,11 +123,12 @@ const OpeningHoursSelector = ({ openingHours, setOpeningHours }: propsType) => {
         Ouvre :
       </label>
       <div className="select-custom select-open" id="custom-select-open">
-        {globalOpen} <RiArrowDropDownLine />
+        {displayHours(globalOpen)}
+        {":00"} <RiArrowDropDownLine />
         <ul>
           {Hours.map((hour: DayOptions) => (
             <li key={hour} onClick={() => setGlobalOpen(hour)}>
-              {displayHours(hour)}
+              {displayHours(hour)}:00
             </li>
           ))}
         </ul>
@@ -118,11 +141,12 @@ const OpeningHoursSelector = ({ openingHours, setOpeningHours }: propsType) => {
         Ferme :
       </label>
       <div className="select-custom select-close" id="custom-select-close">
-        {globalClose} <RiArrowDropDownLine />
+        {displayHours(globalClose)}
+        {":00"} <RiArrowDropDownLine />
         <ul>
           {Hours.map((hour: DayOptions) => (
             <li key={hour} onClick={() => setGlobalClose(hour)}>
-              {displayHours(hour)}
+              {displayHours(hour)}:00
             </li>
           ))}
         </ul>
@@ -132,18 +156,20 @@ const OpeningHoursSelector = ({ openingHours, setOpeningHours }: propsType) => {
 
   const content = (
     <div className="hours-selector-container">
-      {weekCheck}
-      {weekendCheck}
-      {openCustomSelect}
-      {closeCustomSelect}
-      {openingHours.map((day) => (
-        <OpeningDay
-          key={day.day}
-          day={day}
-          openingHours={openingHours}
-          setOpeningHours={setOpeningHours}
-        />
-      ))}
+      <div className="multiple-update-form">
+        {weekCheck}
+        {weekendCheck}
+        {openCustomSelect}
+        <span>À</span>
+        {closeCustomSelect}
+      </div>
+      <button className="btn" onClick={() => handleMultipleUpdate()}>
+        Mettre à Jour
+      </button>
+      <OpeningHours
+        openingHours={openingHours}
+        setOpeningHours={setOpeningHours}
+      />
     </div>
   );
   return content;

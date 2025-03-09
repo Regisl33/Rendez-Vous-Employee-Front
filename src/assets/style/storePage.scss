@@ -9,26 +9,71 @@
 
   .input,
   .select-custom {
-    width: 60%;
+    width: 100%;
     margin: 0 auto;
   }
-
-  .select-country-container {
-    @include justify(center);
-    gap: 20px;
-
-    .select-country {
-      width: 20%;
-    }
+  .select-country,
+  .select-open,
+  .select-close {
+    z-index: 11;
   }
 
   .store-form {
     display: grid;
     gap: 10px;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    .store-name-container {
+      display: grid;
+      grid-template-columns: 27% 70%;
+      gap: 3%;
+    }
+
+    .country-phone-form {
+      display: grid;
+      grid-template-columns: 45% 50%;
+      gap: 5%;
+
+      .select-country-container {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        align-items: center;
+      }
+    }
   }
 
   .hours-selector-container {
     display: grid;
     gap: 10px;
+
+    .checkbox-container {
+      @include justify(center);
+      gap: 10px;
+    }
+
+    .multiple-update-form {
+      display: grid;
+      grid-template-columns: 20% 20% 25% 10% 25%;
+      align-items: center;
+    }
+
+    .opening-hours-container {
+      display: grid;
+      gap: 10px;
+    }
+
+    .border-error {
+      border: 1px solid $color4 !important;
+    }
+    .set-day-container {
+      display: grid;
+      grid-template-columns: 20% 25% 10% 25% 20%;
+      align-items: center;
+      border-radius: 15px;
+      border: 1px solid $color1;
+      padding: 10px;
+    }
   }
 }
