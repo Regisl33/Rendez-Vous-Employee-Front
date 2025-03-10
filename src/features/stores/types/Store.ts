@@ -81,4 +81,8 @@ export type AddStore = {
   openingHours: OpeningHoursType;
 };
 
+export type UpdatedStoreType = {
+  updatedStore: StoreType;
+  id: number;
+};
 export default StoreType;

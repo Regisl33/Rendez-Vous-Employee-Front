@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { OpeningHoursType, DayOptions, Day } from "../types/Store";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Hours } from "../data/Hours";
