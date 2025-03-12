@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { OpeningHoursType, DayOptions, Day } from "../types/Store";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Hours } from "../data/Hours";
 import displayHours from "../utils/displayHours";
-import OpeningHours from "./OpeningHours";
+import OpeningDay from "./OpeningDay";
 
 type propsType = {
   openingHours: OpeningHoursType;
@@ -15,6 +15,19 @@ const OpeningHoursSelector = ({ openingHours, setOpeningHours }: propsType) => {
   const [globalClose, setGlobalClose] = useState<DayOptions>(6);
   const [isWeekChecked, setIsWeekChecked] = useState(false);
   const [isWeekendChecked, setIsWeekendChecked] = useState(false);
+  const [compOpeningHour, setCompOpeningHour] = useState<OpeningHoursType>([
+    ...openingHours,
+  ]);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    const element = document.querySelector(".border-error");
+    if (element) {
+      setIsError(true);
+    } else {
+      setIsError(false);
+    }
+  }, [compOpeningHour]);
 
   const updateMultipleDay = (dayArray: Day[]): Day[] => {
     let newArray: Day[] = [...dayArray];
@@ -31,7 +44,7 @@ const OpeningHoursSelector = ({ openingHours, setOpeningHours }: propsType) => {
     let weekHourArray: OpeningHoursType = [];
     let weekendHourArray: OpeningHoursType = [];
 
-    openingHours.map((day: Day) =>
+    compOpeningHour.map((day: Day) =>
       day.day === "Dimanche" || day.day === "Samedi"
         ? weekendHourArray.push(day)
         : weekHourArray.push(day)
@@ -43,7 +56,7 @@ const OpeningHoursSelector = ({ openingHours, setOpeningHours }: propsType) => {
         ...weekendHourArray,
       ]);
       let newArray = tempArray.sort((a, b) => a.pos - b.pos);
-      setOpeningHours(newArray);
+      setCompOpeningHour(newArray);
     } else if (isWeekChecked) {
       let result = updateMultipleDay(weekHourArray);
       console.log(result);
@@ -51,7 +64,7 @@ const OpeningHoursSelector = ({ openingHours, setOpeningHours }: propsType) => {
         (a, b) => a.pos - b.pos
       );
       console.log(newArray, 2);
-      setOpeningHours(newArray);
+      setCompOpeningHour(newArray);
     } else if (isWeekendChecked) {
       let result = updateMultipleDay(weekendHourArray);
       console.log(result);
@@ -59,7 +72,7 @@ const OpeningHoursSelector = ({ openingHours, setOpeningHours }: propsType) => {
         (a, b) => a.pos - b.pos
       );
       console.log(newArray, 3);
-      setOpeningHours(newArray);
+      setCompOpeningHour(newArray);
     }
   };
 
@@ -166,10 +179,22 @@ const OpeningHoursSelector = ({ openingHours, setOpeningHours }: propsType) => {
       <button className="btn" onClick={() => handleMultipleUpdate()}>
         Mettre à Jour
       </button>
-      <OpeningHours
-        openingHours={openingHours}
-        setOpeningHours={setOpeningHours}
-      />
+
+      <div className="opening-hours-container">
+        {compOpeningHour.map((day: Day) => (
+          <OpeningDay
+            key={day.day}
+            day={day}
+            compOpeningHour={compOpeningHour}
+            setCompOpeningHour={setCompOpeningHour}
+          />
+        ))}
+        {isError && (
+          <p className="errorMsg">
+            Chaque jour doit avoir un horaire valide ou etre fermé !
+          </p>
+        )}
+      </div>
     </div>
   );
   return content;

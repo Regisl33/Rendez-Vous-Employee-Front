@@ -48,7 +48,7 @@ const CreateStore = () => {
       openingHours
     ) {
       setIsValid(true);
-    } else if (!phoneRegExp.test(storePhone)) {
+    } else if (!phoneRegExp.test(storePhone) && storePhone.length > 0) {
       setMessage("Entrez un Numéro de Téléphone Valide");
       setIsValid(false);
     } else {

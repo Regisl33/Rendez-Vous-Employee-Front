@@ -6,12 +6,16 @@ import { Day, DayOptions, OpeningHoursType } from "../types/Store";
 import getPosByDay from "../utils/getPosByDay";
 
 type propsType = {
-  openingHours: OpeningHoursType;
-  setOpeningHours: React.Dispatch<React.SetStateAction<OpeningHoursType>>;
+  compOpeningHour: OpeningHoursType;
+  setCompOpeningHour: React.Dispatch<React.SetStateAction<OpeningHoursType>>;
   day: Day;
 };
 
-const OpeningDay = ({ day, setOpeningHours, openingHours }: propsType) => {
+const OpeningDay = ({
+  day,
+  setCompOpeningHour,
+  compOpeningHour,
+}: propsType) => {
   const [open, setOpen] = useState<DayOptions | undefined>(day.open);
   const [close, setClose] = useState<DayOptions | undefined>(day.close);
   const [closed, setClosed] = useState<boolean>(day.closed);
@@ -38,7 +42,7 @@ const OpeningDay = ({ day, setOpeningHours, openingHours }: propsType) => {
   }, [open, close, closed]);
 
   useEffect(() => {
-    let hoursBackup: Day[] = [...openingHours].filter(
+    let hoursBackup: Day[] = [...compOpeningHour].filter(
       (storedDay: Day) => storedDay.day !== day.day
     );
     let updatedDay: Day = {
@@ -51,7 +55,7 @@ const OpeningDay = ({ day, setOpeningHours, openingHours }: propsType) => {
     let newArray: OpeningHoursType = [...hoursBackup, updatedDay].sort(
       (a, b) => a.pos - b.pos
     );
-    setOpeningHours(newArray);
+    setCompOpeningHour(newArray);
   }, [open, close, closed]);
 
   const openCustomSelect = (
