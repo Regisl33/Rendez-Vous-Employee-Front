@@ -43,7 +43,7 @@ const storeSlice = api.injectEndpoints({
       }),
       invalidatesTags: ["Stores"],
     }),
-    updateService: builder.mutation({
+    updateStore: builder.mutation({
       query: ({ updatedStore, id }: UpdatedStoreType) => ({
         url: `/stores/:${id}`,
         method: "PATCH",
@@ -54,4 +54,9 @@ const storeSlice = api.injectEndpoints({
   }),
 });
 
-export const { useCreateStoreMutation } = storeSlice;
+export const {
+  useCreateStoreMutation,
+  useGetAllStoresQuery,
+  useGetStoreByIDQuery,
+  useUpdateStoreMutation,
+} = storeSlice;
