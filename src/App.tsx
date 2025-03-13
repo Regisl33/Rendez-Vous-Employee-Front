@@ -4,6 +4,7 @@ import StoreServices from "./features/services/components/StoreServices";
 import UpdateService from "./features/services/components/UpdateService";
 import Layout from "./components/Layout";
 import CreateStore from "./features/stores/components/CreateStore";
+import RoleDisplay from "./features/roles/components/RoleDisplay";
 
 const App = () => {
   const app = (
@@ -15,6 +16,8 @@ const App = () => {
           <Route path="/services/add" element={<CreateService />} />
 
           <Route path="/stores/add" element={<CreateStore />} />
+
+          <Route path="/roles" element={<RoleDisplay />} />
         </Route>
       </Routes>
     </BrowserRouter>
