@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import RoleType from "../types/roles";
 
 type propsType = {
@@ -5,11 +6,12 @@ type propsType = {
 };
 
 const Role = ({ role }: propsType) => {
+  const navigate = useNavigate();
   const content = (
     <div className="role">
       <h2>{role.name}</h2>
       <span className={role.color}></span>
-      <button>Modifier</button>
+      <button onClick={() => navigate(`/roles/:${role.id}`)}>Modifier</button>
     </div>
   );
   return content;
