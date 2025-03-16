@@ -170,3 +170,34 @@
   color: $color4;
   letter-spacing: 1px;
 }
+.display {
+  display: none;
+}
+.display-active {
+  display: block;
+}
+.confirm {
+  border: 1px solid $color5;
+}
+.error {
+  border: 1px solid $color4;
+}
+.error,
+.confirm {
+  display: grid;
+  gap: 15px;
+  border-radius: 25px;
+  padding: 10px;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: $white1;
+  z-index: 30;
+
+  svg {
+    font-size: 2rem;
+  }
+}

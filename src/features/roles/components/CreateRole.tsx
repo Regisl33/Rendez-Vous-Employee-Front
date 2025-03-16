@@ -1,43 +1,61 @@
 import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import { color } from "../types/roles";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { SlClose } from "react-icons/sl";
 import colorData from "../data/colorData";
 import displayColorName from "../utils/displayColorName";
+import { CreateRoleType, StatusType } from "../types/roles";
+import ErrorConfirmModal from "../../../components/ErrorConfirmModal";
+import { useCreateRoleMutation } from "../rolesSlice";
 
 const storeNum = "1234";
 
-const CreateRole = () => {
+type propsType = {
+  display: boolean;
+  setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const CreateRole = ({ display, setDisplay }: propsType) => {
   const [roleName, setRoleName] = useState("");
   const [color, setColor] = useState<color>("colOpt1");
-  const [isValid, setIsValid] = useState(false);
   const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<StatusType>("active");
   //Refs
   const nameRef = useRef<HTMLInputElement>(null);
-  const messageRef = useRef<HTMLParagraphElement>(null);
+
+  const [createRole] = useCreateRoleMutation();
 
   //UseRef Effect for Name
   useEffect(() => {
     if (nameRef.current) nameRef.current.focus;
   }, [nameRef]);
-  //UseRef Effect for Error
-  useEffect(() => {
-    if (message.length > 0) messageRef.current?.focus;
-  }, [message, messageRef]);
-  //Remove Error Message
-  useEffect(() => {
-    setMessage("");
-  }, [roleName]);
-  //Test if the form is Valid
-  useEffect(() => {
-    if (roleName.length > 0 && message.length === 0) {
-      setIsValid(true);
-    } else {
-      setIsValid(false);
-    }
-  }, [roleName, message]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
+    if (roleName.length > 0) {
+      let newRole: CreateRoleType = {
+        name: roleName,
+        store: storeNum,
+        color,
+      };
+
+      try {
+        createRole(newRole).unwrap();
+        setMessage(`Le Role: ${roleName} a été créé`);
+        setStatus("confirm");
+      } catch (err) {
+        if (err instanceof Error) {
+          setMessage(err.message);
+        } else {
+          setMessage("Il y a eu une erreur en créant le role");
+        }
+        setStatus("error");
+      }
+    } else {
+      setMessage("Le role doit avoir un nom");
+      setStatus("error");
+    }
   };
 
   const roleInput = (
@@ -77,19 +95,30 @@ const CreateRole = () => {
   );
 
   const content = (
-    <form className="create-role-container" onSubmit={handleSubmit}>
-      <p
-        ref={messageRef}
-        className={message.length > 0 ? "errorMsg" : "offscreen"}
-      >
-        {message}
-      </p>
-      {roleInput}
-      {customSelectcolors}
-      <button className="btn" disabled={isValid}>
-        Créer
-      </button>
-    </form>
+    <div
+      className={
+        display
+          ? "create-role-modal display-active"
+          : "create-role-modal display"
+      }
+      id="roleModal"
+    >
+      <span>
+        <SlClose onClick={() => setDisplay(false)} />
+      </span>
+      <form className="role-form-container" onSubmit={handleSubmit}>
+        {roleInput}
+        {customSelectcolors}
+        <button className="btn" disabled={status === "active" ? false : true}>
+          Créer
+        </button>
+      </form>
+      <ErrorConfirmModal
+        status={status}
+        setStatus={setStatus}
+        message={message}
+      />
+    </div>
   );
 
   return content;

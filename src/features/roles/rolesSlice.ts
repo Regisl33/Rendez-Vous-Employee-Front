@@ -1,6 +1,6 @@
 import { createEntityAdapter } from "@reduxjs/toolkit";
 import api from "../../app/api/api";
-import RoleType, { CreateRole, UpdateRole } from "./types/roles";
+import RoleType, { CreateRoleType, UpdateRole } from "./types/roles";
 
 const rolesAdapter = createEntityAdapter({
   selectId: (role: RoleType) => role.id,
@@ -36,7 +36,7 @@ const rolesSlice = api.injectEndpoints({
       },
     }),
     createRole: builder.mutation({
-      query: (service: CreateRole) => ({
+      query: (service: CreateRoleType) => ({
         url: "/roles",
         method: "POST",
         body: service,

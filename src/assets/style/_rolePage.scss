@@ -1,0 +1,90 @@
+@use "./settings" as *;
+
+.role-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 20px auto;
+  display: grid;
+  gap: 20px;
+  position: relative;
+
+  .role {
+    border: 1px solid $color1;
+    border-radius: 20px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 90% 10%;
+    align-items: center;
+
+    h2 {
+      @include title(1.3rem);
+      text-transform: capitalize;
+      margin: 5px auto;
+    }
+
+    span {
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+      place-self: center;
+    }
+  }
+}
+.create-role-modal {
+  max-width: 750px;
+  width: 90%;
+  border-radius: 25px;
+  border: 1px solid $color1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: $white1;
+  z-index: 20;
+  padding: 15px;
+
+  span {
+    position: absolute;
+    font-size: 2rem;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+    svg {
+      color: $color1;
+    }
+
+    &:hover {
+      transform: scale(105%);
+    }
+  }
+
+  .role-form-container {
+    display: grid;
+    gap: 15px;
+
+    input {
+      width: 90%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .select-colors-container {
+      display: grid;
+      grid-template-columns: 30% 70%;
+      align-items: center;
+
+      svg {
+        color: $color1;
+      }
+
+      .select-colors {
+        width: 90%;
+        max-width: 400px;
+        margin: 0 auto;
+        @include justify(center);
+        gap: 15px;
+      }
+    }
+  }
+}

@@ -5,7 +5,6 @@ import UpdateService from "./features/services/components/UpdateService";
 import Layout from "./components/Layout";
 import CreateStore from "./features/stores/components/CreateStore";
 import RoleDisplay from "./features/roles/components/RoleDisplay";
-import CreateRole from "./features/roles/components/CreateRole";
 import UpdateRole from "./features/roles/components/UpdateRole";
 
 const App = () => {
@@ -20,7 +19,6 @@ const App = () => {
           <Route path="/stores/add" element={<CreateStore />} />
 
           <Route path="/roles" element={<RoleDisplay />} />
-          <Route path="/roles/add" element={<CreateRole />} />
           <Route path="/roles/:roleID" element={<UpdateRole />} />
         </Route>
       </Routes>

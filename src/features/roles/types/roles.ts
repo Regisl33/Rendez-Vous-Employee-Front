@@ -21,7 +21,7 @@ type RoleType = {
   __v: number;
 };
 
-export type CreateRole = {
+export type CreateRoleType = {
   name: string;
   store: string;
   color: color;
@@ -31,5 +31,7 @@ export type UpdateRole = {
   updatedRole: RoleType;
   id: number;
 };
+
+export type StatusType = "active" | "error" | "confirm";
 
 export default RoleType;

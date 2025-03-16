@@ -9,9 +9,13 @@ const Role = ({ role }: propsType) => {
   const navigate = useNavigate();
   const content = (
     <div className="role">
-      <h2>{role.name}</h2>
+      <div>
+        <h2>{role.name}</h2>
+        <button className="btn" onClick={() => navigate(`/roles/:${role.id}`)}>
+          Modifier
+        </button>
+      </div>
       <span className={role.color}></span>
-      <button onClick={() => navigate(`/roles/:${role.id}`)}>Modifier</button>
     </div>
   );
   return content;
