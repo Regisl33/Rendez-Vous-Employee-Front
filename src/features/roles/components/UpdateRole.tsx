@@ -7,6 +7,7 @@ import displayColorName from "../utils/displayColorName";
 import colorData from "../data/colorData";
 import { color } from "../types/roles";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import CreateDispos from "../../dispos/components/CreateDispos";
 
 const UpdateRole = () => {
   const { roleID } = useParams<{ roleID: string }>();
@@ -17,6 +18,7 @@ const UpdateRole = () => {
   const [roleName, setRoleName] = useState(roleData?.name);
   const [color, setColor] = useState<color>(roleData?.color || "colOpt1");
   const [active, setActive] = useState(true);
+  const [display, setDisplay] = useState(true);
 
   //Verify if we got an error and handles it
   useEffect(() => {
@@ -69,7 +71,13 @@ const UpdateRole = () => {
     </div>
   );
 
-  return <div></div>;
+  return (
+    <CreateDispos
+      display={display}
+      setDisplay={setDisplay}
+      roleID={roleID as string}
+    />
+  );
 };
 
 export default UpdateRole;
