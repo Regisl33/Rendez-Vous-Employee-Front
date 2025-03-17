@@ -5,7 +5,7 @@ const url = import.meta.env.API_BASE_URL;
 const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3500" }),
-  tagTypes: ["Services", "Stores", "Roles"],
+  tagTypes: ["Services", "Stores", "Roles", "Dispos"],
   endpoints: () => ({}),
 });
 

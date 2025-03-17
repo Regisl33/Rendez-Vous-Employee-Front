@@ -101,7 +101,6 @@ const CreateRole = ({ display, setDisplay }: propsType) => {
           ? "create-role-modal display-active"
           : "create-role-modal display"
       }
-      id="roleModal"
     >
       <span>
         <SlClose onClick={() => setDisplay(false)} />
