@@ -122,15 +122,10 @@ const CreateDispos = ({ display, setDisplay, roleID }: propsType) => {
         {startDateInput}
         {endDateInput}
         {customSelectMultipleService}
+        <button className="btn">Ajouter</button>
       </form>
     </div>
   );
-
-  displayOpt &&
-    addEventListener("click", (e: MouseEvent) => {
-      if (e.target !== document.querySelector(".display/active"))
-        setDisplayOpt(false);
-    });
 
   return content;
 };

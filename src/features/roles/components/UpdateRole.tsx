@@ -15,16 +15,22 @@ const UpdateRole = () => {
   const { data: roleData, isError, error } = useGetRoleByIDQuery(id as string);
 
   const [modifyRoleName, setModifyRoleName] = useState(false);
-  const [roleName, setRoleName] = useState(roleData?.name);
-  const [color, setColor] = useState<color>(roleData?.color || "colOpt1");
+  const [roleName, setRoleName] = useState("");
+  const [color, setColor] = useState<color>("colOpt1");
   const [active, setActive] = useState(true);
   const [display, setDisplay] = useState(true);
+
+  const handleSubmit = () => {};
 
   //Verify if we got an error and handles it
   useEffect(() => {
     if (!id) console.error("roleID must exist in url");
     if (isError) console.error(error);
-  }, [roleID, isError, error]);
+    if (roleData) {
+      setRoleName(roleData.name);
+      setColor(roleData.color);
+    }
+  }, [roleID, isError, error, roleData]);
 
   const optTitleInput = modifyRoleName ? (
     <div className="modify-name-container">
@@ -71,13 +77,22 @@ const UpdateRole = () => {
     </div>
   );
 
-  return (
-    <CreateDispos
-      display={display}
-      setDisplay={setDisplay}
-      roleID={roleID as string}
-    />
+  const content = (
+    <div className="update-role-container">
+      {optTitleInput}
+      {customSelectcolors}
+      <button className="btn" onClick={() => handleSubmit()}>
+        Enregistrer
+      </button>
+      <CreateDispos
+        display={display}
+        setDisplay={setDisplay}
+        roleID={roleID as string}
+      />
+    </div>
   );
+
+  return content;
 };
 
 export default UpdateRole;
